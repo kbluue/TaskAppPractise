@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(setLayoutId());
+        setContentView(getLayoutId());
         init();
     }
 
@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected abstract int setLayoutId();
+    protected abstract int getLayoutId();
 
     protected abstract void init();
 }
