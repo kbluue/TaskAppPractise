@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.google.gson.Gson;
 
+import java.util.Locale;
+
 public class StorableObject {
 
     private String id, prefix;
@@ -18,7 +20,7 @@ public class StorableObject {
     public StorableObject(Context context, String prefix) {
         this.prefix = prefix;
         this.context = context;
-        setId(prefix + getUID(context));
+        setId(String.format(Locale.ENGLISH, "%d04%d", prefix, getUID(context)));
     }
 
     public String getId() {

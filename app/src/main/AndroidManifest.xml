@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.kbluue_.unnamedtaskapp">
@@ -9,8 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="android:appComponentFactory">
+        tools:ignore="GoogleAppIndexingWarning" >
         <activity android:name=".Activities.SingleTaskActivity" />
         <activity android:name=".Activities.TaskListActivity">
             <intent-filter>

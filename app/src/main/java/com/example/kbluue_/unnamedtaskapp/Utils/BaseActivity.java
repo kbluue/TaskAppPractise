@@ -1,12 +1,12 @@
 package com.example.kbluue_.unnamedtaskapp.Utils;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.MenuAction;
