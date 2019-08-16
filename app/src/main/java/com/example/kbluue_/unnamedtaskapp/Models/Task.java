@@ -22,4 +22,22 @@ public class Task extends Memo {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    public void toggleDone(){
+        setDone(!isDone());
+    }
+
+    public String getActiveCount(){
+        if (getChildren() == null || getChildren().isEmpty()){
+            return "";
+        }
+        int activeCount = 0;
+        for (Memo memo : getChildren()){
+            Task task = (Task) memo;
+            if (!task.isDone()){
+                activeCount++;
+            }
+        }
+        return activeCount + "/" + getChildren().size();
+    }
 }

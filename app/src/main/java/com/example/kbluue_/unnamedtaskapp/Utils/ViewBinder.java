@@ -32,15 +32,19 @@ public class ViewBinder {
         return new ViewBinder(parent);
     }
 
+    private View getView(int viewId){
+        if (parentActivity != null) {
+            return parentActivity.findViewById(viewId);
+        } else if (parentView != null) {
+            return parentView.findViewById(viewId);
+        } else {
+            return null;
+        }
+    }
+
     private boolean bind(int viewId, Object content, int zero){
         try {
-            View view = null;
-
-            if (parentActivity != null) {
-                view = parentActivity.findViewById(viewId);
-            } else if (parentView != null) {
-                view = parentView.findViewById(viewId);
-            }
+            View view = getView(viewId);
 
             if (view instanceof TextView) {
                 ((TextView) view).setText(content.toString());
@@ -70,6 +74,15 @@ public class ViewBinder {
 
     public ViewBinder bind(int viewId, Object content){
         bind(viewId, content, 0);
+        return this;
+    }
+
+    public ViewBinder addOnClickListener(int viewId, View.OnClickListener listener){
+        View v = getView(viewId);
+        if (v != null) {
+            v.setClickable(true);
+            v.setOnClickListener(listener);
+        }
         return this;
     }
 }
