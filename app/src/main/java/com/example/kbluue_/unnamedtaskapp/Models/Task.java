@@ -9,8 +9,6 @@ public class Task extends Memo {
     private boolean done;
 
     public Task(){
-        super(null, TASK);
-        setParent(true);
     }
 
     public Task(Context context){

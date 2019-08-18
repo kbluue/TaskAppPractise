@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">UnnamedTaskApp</string>
+
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
 </resources>

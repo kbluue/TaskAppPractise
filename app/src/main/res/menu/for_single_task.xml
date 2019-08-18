@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="@string/prev"
+        android:icon="@drawable/ic_prev"
+        android:id="@+id/sv_prev_menu"
+        app:showAsAction="always"/>
+
+    <item
+        android:title="@string/delete"
+        android:icon="@drawable/ic_delete"
+        android:id="@+id/sv_delete_menu"
+        app:showAsAction="always"/>
+
+    <item
+        android:title="@string/next"
+        android:icon="@drawable/ic_next"
+        android:id="@+id/sv_next_menu"
+        app:showAsAction="always"/>
+
+</menu>
