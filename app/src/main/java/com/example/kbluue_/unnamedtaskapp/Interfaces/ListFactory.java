@@ -2,7 +2,7 @@ package com.example.kbluue_.unnamedtaskapp.Interfaces;
 
 import java.util.List;
 
-public interface Delegator {
+public interface ListFactory {
 
     Object addMember(Object... initialVariables);
 

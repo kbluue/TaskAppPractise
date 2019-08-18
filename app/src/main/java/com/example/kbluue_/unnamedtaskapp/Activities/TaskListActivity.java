@@ -1,14 +1,17 @@
 package com.example.kbluue_.unnamedtaskapp.Activities;
 
+import android.view.View;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
 
-public class TaskListActivity extends BaseActivity {
+public class TaskListActivity extends BaseActivity implements HasButtons {
 
     @Override
     protected int getLayoutId() {
@@ -22,5 +25,9 @@ public class TaskListActivity extends BaseActivity {
         rv.setHasFixedSize(true);
         rv.setAdapter(new TaskAdapter());
         rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onButtonPressed(View v) {
     }
 }

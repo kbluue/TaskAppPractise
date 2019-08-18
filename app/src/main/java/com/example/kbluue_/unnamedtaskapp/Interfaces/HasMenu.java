@@ -8,13 +8,13 @@ public interface HasMenu {
 
     int setMenuId();
 
-    List<MenuAction> setMenuActions();
+    List<ClickableAction> setMenuActions();
 
     default void hideAdminMenu(Menu menu){
-        List<MenuAction> actions = setMenuActions();
-        for (MenuAction action : actions){
+        List<ClickableAction> actions = setMenuActions();
+        for (ClickableAction action : actions){
             if (action.isAdmin()){
-                menu.findItem(action.getMenuId())
+                menu.findItem(action.getViewId())
                         .setVisible(false);
             }
         }
