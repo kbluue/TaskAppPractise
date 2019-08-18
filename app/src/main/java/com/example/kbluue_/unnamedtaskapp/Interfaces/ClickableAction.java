@@ -41,12 +41,12 @@ public class ClickableAction {
         return super.equals(obj);
     }
 
-    public static class Delegate implements ListFactory {
+    public static class Factory implements ListFactory {
 
         public static List<ClickableAction> actionList = new ArrayList<>();
 
         @Override
-        public Delegate addMember(Object... initialVariables) {
+        public Factory addMember(Object... initialVariables) {
             if (getConstructorType(initialVariables) == 0){
                 int viewId = (int) initialVariables[0];
                 Runnable action = (Runnable) initialVariables[1];

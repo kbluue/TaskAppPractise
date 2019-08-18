@@ -9,17 +9,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
-import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by _kbluue_ on 8/2/2019.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements Serializable {
 
     private int menuRes;
     private boolean isAdmin = true;
@@ -76,12 +77,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void onButtonPressed(View view){
-        Runnable action = findButtonActionById(view.getId());
-        if (action == null) {
-            Toast.makeText(this,
-                    view.getContentDescription() + ": Action not defined", Toast.LENGTH_SHORT).show();
+        Runnable runnable = findButtonActionById(view.getId());
+        if (runnable == null) {
+            Toast.makeText(this, "Action not defined", Toast.LENGTH_SHORT).show();
         } else {
-            action.run();
+            runnable.run();
         }
     }
 

@@ -1,15 +1,16 @@
 package com.example.kbluue_.unnamedtaskapp.Activities;
 
-import android.view.View;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
+
+import java.util.List;
 
 public class TaskListActivity extends BaseActivity implements HasButtons {
 
@@ -28,6 +29,10 @@ public class TaskListActivity extends BaseActivity implements HasButtons {
     }
 
     @Override
-    public void onButtonPressed(View v) {
+    public List<ClickableAction> getButtonActions() {
+        return new ClickableAction.Factory()
+                .addMember(R.id.add_task,
+                        (Runnable) () -> SingleTaskActivity.start(this, new Task(getBaseContext())), false)
+                .deliver();
     }
 }
