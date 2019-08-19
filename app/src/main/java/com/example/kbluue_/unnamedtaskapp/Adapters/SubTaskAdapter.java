@@ -62,7 +62,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
             ViewBinder.getInstance(itemView)
                     .bind(R.id.sub_task_state, subTask.getId() != null
                             ? subTask.isDone() ? R.drawable.ic_done : R.drawable.ic_not_done : R.drawable.ic_add)
-                    .bind(R.id.sub_task_delete, subTask.getId() != null ? R.drawable.ic_delete : 0)
+                    .bind(R.id.sub_task_delete, subTask.getId() != null ? R.drawable.ic_delete_color : R.drawable.ic_clear)
                     .bind(R.id.sub_task, subTask.getName())
                     .addOnClickListener(R.id.sub_task_state, subTask.getId() == null
                             ? v -> {}
