@@ -21,8 +21,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/sub_task_state"
-        android:layout_alignEnd="@id/sub_task_delete"
+        android:layout_toEndOf="@id/sub_task_state"
+        android:layout_toStartOf="@id/sub_task_delete"
         android:id="@+id/sub_task"/>
 
 </RelativeLayout>

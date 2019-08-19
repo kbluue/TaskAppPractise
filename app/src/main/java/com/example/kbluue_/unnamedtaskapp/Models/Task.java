@@ -8,8 +8,7 @@ public class Task extends Memo {
 
     private boolean done;
 
-    public Task(){
-    }
+    public Task(){}
 
     public Task(Context context){
         super(context, TASK);
@@ -31,14 +30,14 @@ public class Task extends Memo {
     public String getActiveCount(){
         if (getChildren() == null || getChildren().isEmpty()){
             return "";
-        }
-        int activeCount = 0;
-        for (Memo memo : getChildren()){
-            Task task = (Task) memo;
-            if (!task.isDone()){
-                activeCount++;
+        } else {
+            int activeCount = 0;
+            for (Task task : getChildren(Task.class)){
+                if (!task.isDone()){
+                    activeCount++;
+                }
             }
+            return activeCount + "/" + getChildren().size();
         }
-        return activeCount + "/" + getChildren().size();
     }
 }

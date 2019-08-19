@@ -63,7 +63,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
         }
 
         private void addOnClickListener(Task task){
-            itemView.setOnClickListener(v -> SingleTaskActivity.start(v.getContext(), task));
+            itemView.setOnClickListener(v -> SingleTaskActivity.start(v.getContext(), tasks.indexOf(task)));
         }
     }
 }

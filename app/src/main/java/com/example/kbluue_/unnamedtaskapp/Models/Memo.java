@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Memo extends StorableObject {
+public class Memo extends StorableObject implements Comparable {
 
     private boolean parent;
     private boolean urgent;
@@ -43,6 +43,18 @@ public class Memo extends StorableObject {
 
     public List<Memo> getChildren() {
         return children;
+    }
+
+    public <T extends Memo> List<T> getChildren(Class<T> klass) {
+        if (getChildren() == null) {
+            return null;
+        } else {
+            List<T> ts = new ArrayList<>();
+            for (Memo memo : children){
+                ts.add(klass.cast(memo));
+            }
+            return ts;
+        }
     }
 
     public Memo setChildren(List<Memo> children) {
@@ -107,6 +119,30 @@ public class Memo extends StorableObject {
             return children.get(position);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Memo) {
+            Memo anotherMemo = (Memo) o;
+            Timestamp anotherMemoTS = anotherMemo.getTimeCreated(),
+                    thisTS = getTimeCreated();
+            if (anotherMemoTS == null ^ thisTS == null){
+                if (thisTS == null){
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } else {
+                if (thisTS == null){
+                    return 0;
+                } else {
+                    return anotherMemoTS.getDate().compareTo(thisTS.getDate());
+                }
+            }
+        } else {
+            return -1;
         }
     }
 }

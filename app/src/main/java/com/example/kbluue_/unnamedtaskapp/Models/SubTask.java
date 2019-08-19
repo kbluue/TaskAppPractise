@@ -2,11 +2,11 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
-public class Subtask extends Task {
+public class SubTask extends Task {
 
-    public Subtask(){}
+    public SubTask(){}
 
-    public Subtask(Context context){
+    public SubTask(Context context){
         super(context);
         setParent(false);
     }
