@@ -14,6 +14,14 @@ import java.util.List;
 
 public class TaskListActivity extends BaseActivity implements HasButtons {
 
+    TaskAdapter adapter = new TaskAdapter();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.layout_task_list;
@@ -24,7 +32,7 @@ public class TaskListActivity extends BaseActivity implements HasButtons {
         TaskAdapter.tasks.add(new Task(this));
         RecyclerView rv = findViewById(R.id.tasks_rv);
         rv.setHasFixedSize(true);
-        rv.setAdapter(new TaskAdapter());
+        rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
 

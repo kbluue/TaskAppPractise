@@ -8,10 +8,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
     private int menuRes;
     private boolean isAdmin = true;
     private List<ClickableAction> menuActions, buttonActions;
+    private RecyclerView.Adapter adapter;
 
     public boolean isAdmin() {
         return isAdmin;
@@ -32,6 +36,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        this.adapter = adapter;
     }
 
     @Override
@@ -46,6 +58,20 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
             if (!isAdmin){
                 hasButtons.hideAdminButtons();
             }
+        }
+
+        if (this instanceof HasRecyclerView) {
+            HasRecyclerView hasRecyclerView = (HasRecyclerView) this;
+            hasRecyclerView.initRV(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null){
+            adapter.notifyDataSetChanged();
+            System.out.println("Adapter not null" + TaskAdapter.tasks.size());
         }
     }
 
