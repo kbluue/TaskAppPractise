@@ -28,7 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
     private int menuRes;
     private boolean isAdmin = true;
     private List<ClickableAction> menuActions, buttonActions;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter baseAdapter;
 
     public boolean isAdmin() {
         return isAdmin;
@@ -38,12 +38,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
         isAdmin = admin;
     }
 
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
+    public RecyclerView.Adapter getBaseAdapter() {
+        return baseAdapter;
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        this.adapter = adapter;
+    public void setBaseAdapter(RecyclerView.Adapter baseAdapter) {
+        this.baseAdapter = baseAdapter;
     }
 
     @Override
@@ -69,9 +69,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
     @Override
     protected void onResume() {
         super.onResume();
-        if (adapter != null){
-            adapter.notifyDataSetChanged();
-            System.out.println("Adapter not null" + TaskAdapter.tasks.size());
+        if (baseAdapter != null){
+            baseAdapter.notifyDataSetChanged();
+            System.out.println("Adapter not null: " + TaskAdapter.tasks.size());
         }
     }
 

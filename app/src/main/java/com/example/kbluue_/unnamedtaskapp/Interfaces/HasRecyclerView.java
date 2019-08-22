@@ -15,12 +15,12 @@ public interface HasRecyclerView {
     default void initRV(BaseActivity host){
         RecyclerView view = host.findViewById(getViewRes());
         setBaseAdapter(host);
-        view.setAdapter(host.getAdapter());
+        view.setAdapter(host.getBaseAdapter());
         view.setLayoutManager(getLayoutManager());
         view.setHasFixedSize(true);
     }
 
     default void setBaseAdapter(BaseActivity host){
-        host.setAdapter(getAdapter());
+        host.setBaseAdapter(getAdapter());
     }
 }
