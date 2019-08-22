@@ -40,4 +40,15 @@ public class Task extends Memo {
             return activeCount + "/" + getChildren().size();
         }
     }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Task) {
+            Task task = (Task) o;
+            if (task.isDone() ^ this.isDone()){
+                return task.isDone() ? -1 : 1;
+            }
+        }
+        return super.compareTo(o);
+    }
 }
