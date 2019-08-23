@@ -14,6 +14,7 @@ public class Task extends Memo {
         super(context, TASK);
         setName("Task #" + getId());
         setParent(true);
+        addChild(new SubTask());
     }
 
     public boolean isDone() {
@@ -22,6 +23,16 @@ public class Task extends Memo {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    @Override
+    public Task addChild(Memo child) {
+        if (child instanceof SubTask) {
+            SubTask subTask = (SubTask) child;
+            return (Task) super.addChild(subTask);
+        } else {
+            return this;
+        }
     }
 
     public void toggleDone(){
@@ -38,7 +49,7 @@ public class Task extends Memo {
                     activeCount++;
                 }
             }
-            return activeCount + "/" + getChildren().size();
+            return (activeCount - 1) + "/" + (getChildren().size() - 1);
         }
     }
 

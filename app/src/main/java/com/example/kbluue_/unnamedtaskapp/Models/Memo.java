@@ -101,7 +101,9 @@ public class Memo extends StorableObject implements Comparable {
                 children = new ArrayList<>();
             }
             children.add(child);
-            setLastUpdated(child.getLastUpdated());
+            if (child.getId() != null){
+                setLastUpdated(child.getLastUpdated());
+            }
             return this;
         } else {
             return null;

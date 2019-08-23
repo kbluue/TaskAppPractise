@@ -16,16 +16,17 @@ import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskVH> {
 
-    public static List<SubTask> subTasks;
+    private static List<SubTask> subTasks;
+    private int index;
 
-    public SubTaskAdapter(int taskPosition){
-        updateSubtaskList(taskPosition);
+    public SubTaskAdapter(int index){
+        this.index = index;
+        updateSubtaskList();
     }
 
     @NonNull
@@ -47,13 +48,14 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         return subTasks.size();
     }
 
-    public void updateSubtaskList(int taskPosition){
-        Task task = TaskAdapter.tasks.get(taskPosition);
-        subTasks = task.getChildren(SubTask.class);
-        if (subTasks == null) {
-            subTasks = new ArrayList<>();
-        }
-        subTasks.add(new SubTask());
+    private Task getTask(){
+        return TaskAdapter.tasks.get(index);
+    }
+
+    private void updateSubtaskList(){
+        try {
+            subTasks = getTask().getChildren(SubTask.class);
+        } catch (ArrayIndexOutOfBoundsException ignored){}
         refresh();
     }
 
@@ -96,7 +98,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     })
                     .addOnClickListener(R.id.btn_right, subTask.getId() == null
                             ? v -> {}
-                            : v -> {})
+                            : v -> { getTask().getChildren().remove(subTask);
+                    updateSubtaskList();})
                     .addOnClickListener(R.id.sub_task, v -> makeEditable());
         }
 
@@ -119,9 +122,9 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     .addOnClickListener(R.id.btn_right, v -> {
                         String newName = ((EditText) config.getView(R.id.sub_task)).getText().toString();
                         subTask.setName(newName);
-                        subTasks.add(subTask);
+                        getTask().addChild(subTask);
                         Toast.makeText(context, "New SubTask Created", Toast.LENGTH_SHORT).show();
-                        refresh();
+                        updateSubtaskList();
                     });
         }
     }
