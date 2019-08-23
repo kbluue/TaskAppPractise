@@ -27,8 +27,6 @@
         android:layout_height="@dimen/img_btn_width"
         android:layout_alignParentStart="true"
         android:layout_below="@id/task_divider"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
         android:id="@+id/task_state"/>
 
     <ImageButton
@@ -36,28 +34,24 @@
         android:layout_height="@dimen/img_btn_width"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/task_divider"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
         android:id="@+id/task_delete"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/img_btn_width"
         android:layout_toLeftOf="@id/task_delete"
         android:layout_below="@id/task_divider"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
         android:textSize="@dimen/smaller_text_size"
+        android:gravity="center"
         android:id="@+id/task_timestamp"/>
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/img_btn_width"
         android:layout_toEndOf="@id/task_state"
         android:layout_below="@id/task_divider"
         android:textSize="@dimen/smaller_text_size"
-        android:layout_marginBottom="@dimen/default_margin"
-        android:layout_marginStart="@dimen/default_margin"
+        android:gravity="center"
         android:id="@+id/sub_task_count"/>
 
 </RelativeLayout>

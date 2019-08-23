@@ -1,6 +1,7 @@
 package com.example.kbluue_.unnamedtaskapp.Utils;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
@@ -50,6 +51,7 @@ public class ViewBinder {
                 ((TextView) view).setText(content.toString());
             } else if (view instanceof ImageView){
                 ImageView target = (ImageView) view;
+                target.setBackgroundColor(Color.TRANSPARENT);
                 if (content instanceof Integer){
                     int i = (int) content;
                     target.setImageResource(i);

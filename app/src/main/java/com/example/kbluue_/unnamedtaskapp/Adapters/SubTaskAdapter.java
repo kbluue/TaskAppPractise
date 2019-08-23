@@ -3,6 +3,7 @@ package com.example.kbluue_.unnamedtaskapp.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +50,12 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
             subTasks = new ArrayList<>();
         }
         subTasks.add(new SubTask());
+        refresh();
+    }
+
+    private void refresh(){
         Collections.sort(subTasks);
+        notifyDataSetChanged();
     }
 
     public class SubTaskVH extends RecyclerView.ViewHolder{
@@ -59,15 +65,14 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         }
 
         public void bind(SubTask subTask){
-            ViewBinder.getInstance(itemView)
-                    .bind(R.id.sub_task_state, subTask.getId() != null
+            ViewBinder binder = ViewBinder.getInstance(itemView)
+                    .bind(R.id.btn_left, subTask.getId() != null
                             ? subTask.isDone() ? R.drawable.ic_done : R.drawable.ic_not_done : R.drawable.ic_add)
-                    .bind(R.id.sub_task_delete, subTask.getId() != null ? R.drawable.ic_delete_color : R.drawable.ic_clear)
+                    .bind(R.id.btn_right, subTask.getId() != null ? R.drawable.ic_delete_color : 0)
                     .bind(R.id.sub_task, subTask.getName())
-                    .addOnClickListener(R.id.sub_task_state, subTask.getId() == null
-                            ? v -> {}
-                            : v -> {})
-                    .addOnClickListener(R.id.sub_task_state, subTask.getId() == null
+                    .addOnClickListener(R.id.btn_left, v ->
+                            Toast.makeText(itemView.getContext(), "Link", Toast.LENGTH_SHORT).show())
+                    .addOnClickListener(R.id.btn_right, subTask.getId() == null
                             ? v -> {}
                             : v -> {});
         }
