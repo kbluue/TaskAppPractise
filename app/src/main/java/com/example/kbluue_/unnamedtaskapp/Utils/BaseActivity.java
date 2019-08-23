@@ -15,14 +15,13 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by _kbluue_ on 8/2/2019.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements Serializable {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private int menuRes;
     private boolean isAdmin = true;

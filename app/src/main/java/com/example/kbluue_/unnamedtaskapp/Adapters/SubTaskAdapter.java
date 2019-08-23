@@ -98,7 +98,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     })
                     .addOnClickListener(R.id.btn_right, subTask.getId() == null
                             ? v -> {}
-                            : v -> { getTask().getChildren().remove(subTask);
+                            : v -> {
+                        getTask().getChildren().remove(subTask);
                     updateSubtaskList();})
                     .addOnClickListener(R.id.sub_task, v -> makeEditable());
         }

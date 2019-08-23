@@ -12,12 +12,11 @@ import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
 
-    public static List<Task> tasks = new ArrayList<>();
+    public static List<Task> tasks;
 
     @NonNull
     @Override

@@ -2,6 +2,9 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.example.kbluue_.unnamedtaskapp.Interfaces.Prefix.TASK;
 
 public class Task extends Memo {
@@ -33,6 +36,22 @@ public class Task extends Memo {
         } else {
             return this;
         }
+    }
+
+    @Override
+    public void save(Context context) {
+        Set<String> taskIds = StorableObject.getPref(context)
+                .getStringSet("taskIds", new HashSet<>());
+        taskIds.add(getId());
+        StorableObject.getPref(context)
+                .edit()
+                .putStringSet("taskIds", taskIds)
+                .apply();
+        super.save(context);
+    }
+
+    public static Task getInstance(Context context, String id) {
+        return (Task) getInstance(context, id, Task.class);
     }
 
     public void toggleDone(){

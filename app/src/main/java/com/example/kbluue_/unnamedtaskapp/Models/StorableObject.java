@@ -6,13 +6,11 @@ import android.content.SharedPreferences;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.Locale;
 
-public class StorableObject implements Serializable {
+public class StorableObject {
 
     private String id, prefix;
-    private Context context;
 
     private final static Gson GSON = new Gson();
 
@@ -20,7 +18,6 @@ public class StorableObject implements Serializable {
 
     public StorableObject(Context context, String prefix) {
         this.prefix = prefix;
-        this.context = context;
         setId(String.format(Locale.ENGLISH, "%s%04d", prefix, getUID(context)));
     }
 
@@ -38,14 +35,6 @@ public class StorableObject implements Serializable {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     public static String getAppName(Context context){
@@ -69,13 +58,13 @@ public class StorableObject implements Serializable {
         return GSON.toJson(this);
     }
 
-    public void save(){
-        getPref(getContext()).edit()
+    public void save(Context context){
+        getPref(context).edit()
                 .putString(getId(), getGsonValue())
                 .apply();
     }
 
-    public static StorableObject getInstance(Context context, String id, Class<StorableObject> aClass) {
+    public static <T extends StorableObject> StorableObject getInstance(Context context, String id,Class<T> aClass) {
         String JsonValue =  StorableObject.getPref(context)
                 .getString(id, "");
         return GSON.fromJson(JsonValue, aClass);

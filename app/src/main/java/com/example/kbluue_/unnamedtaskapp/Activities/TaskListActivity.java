@@ -7,11 +7,14 @@ import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
+import com.example.kbluue_.unnamedtaskapp.Models.StorableObject;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class TaskListActivity extends BaseActivity implements HasButtons, HasRecyclerView {
 
@@ -22,7 +25,9 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
 
     @Override
     protected void init() {
-        TaskAdapter.tasks.add(new Task(this));
+        Task task = new Task(this);
+        task.save(this);
+        TaskAdapter.tasks = loadTasks();
     }
 
     @Override
@@ -46,5 +51,18 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return new LinearLayoutManager(this);
+    }
+
+    private List<Task> loadTasks(){
+        Set<String> taskIds = StorableObject.getPref(this)
+                .getStringSet("taskIds", null);
+        List<Task> tasks = new ArrayList<>();
+        if (taskIds != null) {
+            for (String id : taskIds){
+                Task task = Task.getInstance(this, id);
+                tasks.add(task);
+            }
+        }
+        return tasks;
     }
 }
