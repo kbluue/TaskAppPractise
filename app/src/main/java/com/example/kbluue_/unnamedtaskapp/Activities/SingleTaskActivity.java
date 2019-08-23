@@ -14,7 +14,7 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
-import com.example.kbluue_.unnamedtaskapp.Utils.ViewBinder;
+import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +40,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
         Task task = TaskAdapter.tasks.get(taskIndex);
 
-        ViewBinder.getInstance(this)
+        ViewConfig.getInstance(this)
                 .bind(R.id.sv_task_name, task.getName());
     }
 

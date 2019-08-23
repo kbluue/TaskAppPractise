@@ -18,9 +18,12 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/img_btn_width"
         android:layout_toEndOf="@id/btn_left"
         android:layout_toStartOf="@id/btn_right"
+        android:inputType="none"
+        android:focusable="false"
+        android:selectAllOnFocus="true"
         android:id="@+id/sub_task"/>
 
 </RelativeLayout>

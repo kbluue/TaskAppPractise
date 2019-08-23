@@ -12,6 +12,7 @@ public class Task extends Memo {
 
     public Task(Context context){
         super(context, TASK);
+        setName("Task #" + getId());
         setParent(true);
     }
 

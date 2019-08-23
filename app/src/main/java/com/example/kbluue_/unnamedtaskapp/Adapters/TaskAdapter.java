@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
-import com.example.kbluue_.unnamedtaskapp.Utils.ViewBinder;
+import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
         }
 
         public void bind(Task task){
-            ViewBinder.getInstance(itemView)
+            ViewConfig.getInstance(itemView)
                     .bind(R.id.task_name, task.getName())
                     .bind(R.id.task_state, task.isDone() ? R.drawable.ic_done : R.drawable.ic_not_done)
                     .bind(R.id.sub_task_count, task.getActiveCount())

@@ -8,6 +8,7 @@ public class SubTask extends Task {
 
     public SubTask(Context context){
         super(context);
+        setName("Subtask #" + getId());
         setParent(false);
     }
 }

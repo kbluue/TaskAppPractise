@@ -10,30 +10,30 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-public class ViewBinder {
+public class ViewConfig {
 
     private final Activity parentActivity;
     private final View parentView;
 
-    private ViewBinder(Activity parentActivity) {
+    private ViewConfig(Activity parentActivity) {
         this.parentActivity = parentActivity;
         parentView = null;
     }
 
-    private ViewBinder(View parentView) {
+    private ViewConfig(View parentView) {
         parentActivity = null;
         this.parentView = parentView;
     }
 
-    public static ViewBinder getInstance(Activity parent) {
-        return new ViewBinder(parent);
+    public static ViewConfig getInstance(Activity parent) {
+        return new ViewConfig(parent);
     }
 
-    public static ViewBinder getInstance(View parent) {
-        return new ViewBinder(parent);
+    public static ViewConfig getInstance(View parent) {
+        return new ViewConfig(parent);
     }
 
-    private View getView(int viewId){
+    public View getView(int viewId){
         if (parentActivity != null) {
             return parentActivity.findViewById(viewId);
         } else if (parentView != null) {
@@ -74,12 +74,12 @@ public class ViewBinder {
         }
     }
 
-    public ViewBinder bind(int viewId, Object content){
+    public ViewConfig bind(int viewId, Object content){
         bind(viewId, content, 0);
         return this;
     }
 
-    public ViewBinder addOnClickListener(int viewId, View.OnClickListener listener){
+    public ViewConfig addOnClickListener(int viewId, View.OnClickListener listener){
         View v = getView(viewId);
         if (v != null) {
             v.setClickable(true);

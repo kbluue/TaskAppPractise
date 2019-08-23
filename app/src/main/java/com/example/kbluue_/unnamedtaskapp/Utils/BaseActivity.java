@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
@@ -71,7 +70,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
         super.onResume();
         if (baseAdapter != null){
             baseAdapter.notifyDataSetChanged();
-            System.out.println("Adapter not null: " + TaskAdapter.tasks.size());
         }
     }
 
@@ -85,21 +83,39 @@ public abstract class BaseActivity extends AppCompatActivity implements Serializ
             if (!isAdmin){
                 menuActivity.hideAdminMenu(menu);
             }
+            assert getSupportActionBar() != null;
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Runnable action = findMenuActionById(item.getItemId());
-        if (action == null) {
-            Toast.makeText(this,
-                    item.getTitle() + ": Action not defined", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            action.run();
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
             return true;
+        } else {
+            Runnable action = findMenuActionById(item.getItemId());
+            if (action == null) {
+                Toast.makeText(this,
+                        item.getTitle() + ": Action not defined", Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                action.run();
+                return true;
+            }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     public void onButtonPressed(View view){

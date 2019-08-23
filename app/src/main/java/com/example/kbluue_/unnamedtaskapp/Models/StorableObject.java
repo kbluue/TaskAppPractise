@@ -21,7 +21,7 @@ public class StorableObject implements Serializable {
     public StorableObject(Context context, String prefix) {
         this.prefix = prefix;
         this.context = context;
-        setId(String.format(Locale.ENGLISH, "%s04%d", prefix, getUID(context)));
+        setId(String.format(Locale.ENGLISH, "%s%04d", prefix, getUID(context)));
     }
 
     public String getId() {
