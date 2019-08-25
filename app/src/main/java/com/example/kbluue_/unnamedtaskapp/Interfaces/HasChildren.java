@@ -8,6 +8,4 @@ public interface HasChildren {
 
     <T extends Memo> T getChild(int index);
 
-    <T extends Memo> void addChild(T child);
-
 }

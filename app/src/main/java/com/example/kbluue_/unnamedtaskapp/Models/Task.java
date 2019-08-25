@@ -3,7 +3,6 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 import android.content.Context;
 
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasChildren;
-import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -82,9 +81,17 @@ public class Task extends Memo implements HasChildren {
         return this;
     }
 
-    @Override
-    public <T extends Memo> void addChild(T child) {
-        ArraysUtil.add(children, child);
+    public void addChild(SubTask child) {
+        int len = 0;
+        if (children != null) {
+            len = children.length;
+        }
+        SubTask[] objects = new SubTask[len + 1];
+        for (int i = 0; i < len; i++) {
+            objects[i] = children[i];
+        }
+        objects[len] = child;
+        this.children = objects;
     }
 
     @Override

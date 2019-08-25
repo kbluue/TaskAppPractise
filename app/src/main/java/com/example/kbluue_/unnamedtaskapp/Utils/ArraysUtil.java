@@ -2,7 +2,7 @@ package com.example.kbluue_.unnamedtaskapp.Utils;
 
 public class ArraysUtil {
 
-    public static <T extends Object> void add(T[] array, T obj){
+    public static Object[] add(Object[] array, Object obj){
         int len = 0;
         if (array != null) {
             len = array.length;
@@ -12,9 +12,9 @@ public class ArraysUtil {
             objects[i] = array[i];
         }
         objects[len] = obj;
-        array = (T[]) objects;
+        return objects;
     }
-    public static <T extends Object> void remove(T[] array, T obj){
+    public static <T extends Object> T[] remove(T[] array, T obj){
         int len = 0;
         if (array != null) {
             len = array.length;
@@ -28,6 +28,6 @@ public class ArraysUtil {
             objects[i] = array[i];
         }
         objects[len] = obj;
-        array = (T[]) objects;
+        return (T[]) objects;
     }
 }
