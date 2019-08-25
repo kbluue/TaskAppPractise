@@ -2,19 +2,21 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasChildren;
+import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class Task extends Memo {
+public class Task extends Memo implements HasChildren {
 
     private boolean done;
+    private SubTask[] children;
 
     public Task(){}
 
     public Task(Context context){
         super(context, "Task");
-        setParent(true);
-        addChild(new SubTask());
     }
 
     public boolean isDone() {
@@ -23,16 +25,6 @@ public class Task extends Memo {
 
     public void setDone(boolean done) {
         this.done = done;
-    }
-
-    @Override
-    public <T extends StorableObject> Task addChild(T child) {
-        if (child instanceof SubTask) {
-            SubTask subTask = (SubTask) child;
-            return (Task) super.addChild(child);
-        } else {
-            return null;
-        }
     }
 
     @Override
@@ -82,6 +74,24 @@ public class Task extends Memo {
 
     @Override
     public SubTask[] getChildren() {
-        return super.getChildren();
+        return children;
+    }
+
+    public Task setChildren(SubTask[] children) {
+        this.children = children;
+        return this;
+    }
+
+    @Override
+    public <T extends Memo> void addChild(T child) {
+        ArraysUtil.add(children, child);
+    }
+
+    @Override
+    public SubTask getChild(int index) {
+        if (children != null) {
+            return children[index];
+        }
+        return children[index];
     }
 }

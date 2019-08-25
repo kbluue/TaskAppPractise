@@ -2,13 +2,9 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
-import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
-
 public class Memo extends StorableObject implements Comparable {
 
-    private boolean parent;
     private boolean urgent;
-    private SubTask[] children;
     private Timestamp timeCreated;
     private Timestamp lastUpdated;
 
@@ -20,30 +16,12 @@ public class Memo extends StorableObject implements Comparable {
         lastUpdated = timeCreated;
     }
 
-    public boolean isParent() {
-        return parent;
-    }
-
-    public Memo setParent(boolean parent) {
-        this.parent = parent;
-        return this;
-    }
-
     public boolean isUrgent() {
         return urgent;
     }
 
     public Memo setUrgent(boolean urgent) {
         this.urgent = urgent;
-        return this;
-    }
-
-    public SubTask[] getChildren() {
-        return children;
-    }
-
-    public Memo setChildren(SubTask[] children) {
-        this.children = children;
         return this;
     }
 
@@ -63,46 +41,6 @@ public class Memo extends StorableObject implements Comparable {
     public Memo setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
         return this;
-    }
-
-    /**
-     * @param child
-     * @return null if Memo is not a parent
-     *
-     * Note: this will only work properly if calling Memo is a parent
-     */
-    public <T extends StorableObject> Memo addChild(T child){
-        if (isParent()){
-            ArraysUtil.add(children, child);
-            if (child.getId() != null){
-                Memo memo = ((Memo) child);
-                setLastUpdated(memo.getLastUpdated());
-            }
-            return this;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @param position
-     * @param aClass
-     * @param <T>
-     * @return the child memo in the required position. Will return null if calling memo is not a parent
-     *
-     * Note: this will only work properly if calling Memo is a parent
-     */
-    public <T extends StorableObject> T getChild(int position, Class<T> aClass){
-        if (isParent() && children != null){
-            Object o =  children[position];
-            return aClass.cast(o);
-        } else {
-            return null;
-        }
-    }
-
-    public Memo getChild(int position){
-        return getChild(position, Memo.class);
     }
 
     @Override

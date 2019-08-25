@@ -6,10 +6,8 @@ public interface HasChildren {
 
     <T extends Memo> T[] getChildren();
 
-    <T extends Memo> T setChildren(T[] children);
-
-    <T extends Memo> T addChild(T child);
-
     <T extends Memo> T getChild(int index);
+
+    <T extends Memo> void addChild(T child);
 
 }
