@@ -2,14 +2,13 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
 
 public class Memo extends StorableObject implements Comparable {
 
     private boolean parent;
     private boolean urgent;
-    private List children;
+    private Memo[] children;
     private Timestamp timeCreated;
     private Timestamp lastUpdated;
 
@@ -39,11 +38,11 @@ public class Memo extends StorableObject implements Comparable {
         return this;
     }
 
-    public List getChildren() {
+    public Memo[] getChildren() {
         return children;
     }
 
-    public Memo setChildren(List<Memo> children) {
+    public Memo setChildren(Memo[] children) {
         this.children = children;
         return this;
     }
@@ -74,10 +73,7 @@ public class Memo extends StorableObject implements Comparable {
      */
     public <T extends StorableObject> Memo addChild(T child){
         if (isParent()){
-            if (children == null){
-                children = new ArrayList<>();
-            }
-            children.add(child);
+            ArraysUtil.add(children, child);
             if (child.getId() != null){
                 Memo memo = ((Memo) child);
                 setLastUpdated(memo.getLastUpdated());
@@ -98,7 +94,7 @@ public class Memo extends StorableObject implements Comparable {
      */
     public <T extends StorableObject> T getChild(int position, Class<T> aClass){
         if (isParent() && children != null){
-            Object o =  children.get(position);
+            Object o =  children[position];
             return aClass.cast(o);
         } else {
             return null;

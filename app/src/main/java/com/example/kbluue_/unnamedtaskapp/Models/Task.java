@@ -26,12 +26,12 @@ public class Task extends Memo {
     }
 
     @Override
-    public Task addChild(Memo child) {
+    public <T extends StorableObject> Task addChild(T child) {
         if (child instanceof SubTask) {
             SubTask subTask = (SubTask) child;
-            return (Task) super.addChild(subTask);
+            return (Task) super.addChild(child);
         } else {
-            return this;
+            return null;
         }
     }
 
@@ -55,17 +55,17 @@ public class Task extends Memo {
         setDone(!isDone());
     }
 
-    public String getActiveCount(){
-        if (getChildren() == null || getChildren().isEmpty()){
+    public String getCompletedCount(){
+        if (getChildren() == null){
             return "";
         } else {
-            int activeCount = 0;
-            for (Task task : getChildren(Task.class)){
-                if (!task.isDone()){
-                    activeCount++;
+            int completed = 0;
+            for (SubTask task : getChildren()){
+                if (task.isDone()){
+                    completed++;
                 }
             }
-            return (activeCount - 1) + "/" + (getChildren().size() - 1);
+            return completed + "/" + (getChildren().length - 1);
         }
     }
 
@@ -78,5 +78,10 @@ public class Task extends Memo {
             }
         }
         return super.compareTo(o);
+    }
+
+    @Override
+    public SubTask[] getChildren() {
+        return (SubTask[]) super.getChildren();
     }
 }

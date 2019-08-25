@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.SubTask;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
+import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskVH> {
 
-    private static List<SubTask> subTasks;
+    private static SubTask[] subTasks;
     private int index;
 
     public SubTaskAdapter(int index){
@@ -39,13 +39,13 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
     @Override
     public void onBindViewHolder(@NonNull SubTaskVH holder, int position) {
-        holder.setSubTask(subTasks.get(position));
+        holder.setSubTask(subTasks[position]);
         holder.bind();
     }
 
     @Override
     public int getItemCount() {
-        return subTasks.size();
+        return subTasks.length;
     }
 
     private Task getTask(){
@@ -54,13 +54,13 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
     private void updateSubtaskList(){
         try {
-            subTasks = getTask().getChildren(SubTask.class);
+            subTasks = getTask().getChildren();
         } catch (ArrayIndexOutOfBoundsException ignored){}
         refresh();
     }
 
     private void refresh(){
-        Collections.sort(subTasks);
+        Arrays.sort(subTasks);
         notifyDataSetChanged();
     }
 
@@ -99,8 +99,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     .addOnClickListener(R.id.btn_right, subTask.getId() == null
                             ? v -> {}
                             : v -> {
-                        getTask().getChildren().remove(subTask);
-                    updateSubtaskList();})
+                        ArraysUtil.remove(getTask().getChildren(), subTask);
+                        updateSubtaskList();})
                     .addOnClickListener(R.id.sub_task, v -> makeEditable());
         }
 
