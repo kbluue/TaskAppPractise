@@ -10,7 +10,6 @@ public class Memo extends StorableObject implements Comparable {
     private boolean parent;
     private boolean urgent;
     private List<Memo> children;
-    private String name;
     private Timestamp timeCreated;
     private Timestamp lastUpdated;
 
@@ -18,7 +17,6 @@ public class Memo extends StorableObject implements Comparable {
 
     public Memo(Context context, String prefix){
         super(context, prefix);
-        name = "Memo #" + getId();
         timeCreated = new Timestamp();
         lastUpdated = timeCreated;
     }
@@ -59,15 +57,6 @@ public class Memo extends StorableObject implements Comparable {
 
     public Memo setChildren(List<Memo> children) {
         this.children = children;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Memo setName(String name) {
-        this.name = name;
         return this;
     }
 

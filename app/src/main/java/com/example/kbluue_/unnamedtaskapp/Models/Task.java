@@ -5,8 +5,6 @@ import android.content.Context;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.example.kbluue_.unnamedtaskapp.Interfaces.Prefix.TASK;
-
 public class Task extends Memo {
 
     private boolean done;
@@ -14,8 +12,7 @@ public class Task extends Memo {
     public Task(){}
 
     public Task(Context context){
-        super(context, TASK);
-        setName("Task #" + getId());
+        super(context, "Task");
         setParent(true);
         addChild(new SubTask());
     }

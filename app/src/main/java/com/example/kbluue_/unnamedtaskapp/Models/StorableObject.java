@@ -10,15 +10,15 @@ import java.util.Locale;
 
 public class StorableObject {
 
-    private String id, prefix;
+    private String id, name;
 
     private final static Gson GSON = new Gson();
 
     public StorableObject(){}
 
-    public StorableObject(Context context, String prefix) {
-        this.prefix = prefix;
-        setId(String.format(Locale.ENGLISH, "%s%04d", prefix, getUID(context)));
+    public StorableObject(Context context, String name) {
+        setId(String.format(Locale.ENGLISH, "%s%04d", name.charAt(0), getUID(context)));
+        this.name = String.format(Locale.ENGLISH, "%s #%s", name, getId());
     }
 
     public String getId() {
@@ -29,12 +29,12 @@ public class StorableObject {
         this.id = id;
     }
 
-    public String getPrefix() {
-        return prefix;
+    public String getName() {
+        return name;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public static String getAppName(Context context){
