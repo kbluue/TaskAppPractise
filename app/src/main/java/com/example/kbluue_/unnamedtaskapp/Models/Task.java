@@ -82,6 +82,6 @@ public class Task extends Memo {
 
     @Override
     public SubTask[] getChildren() {
-        return (SubTask[]) super.getChildren();
+        return super.getChildren();
     }
 }

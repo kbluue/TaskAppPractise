@@ -8,7 +8,7 @@ public class Memo extends StorableObject implements Comparable {
 
     private boolean parent;
     private boolean urgent;
-    private Memo[] children;
+    private SubTask[] children;
     private Timestamp timeCreated;
     private Timestamp lastUpdated;
 
@@ -38,11 +38,11 @@ public class Memo extends StorableObject implements Comparable {
         return this;
     }
 
-    public Memo[] getChildren() {
+    public SubTask[] getChildren() {
         return children;
     }
 
-    public Memo setChildren(Memo[] children) {
+    public Memo setChildren(SubTask[] children) {
         this.children = children;
         return this;
     }
