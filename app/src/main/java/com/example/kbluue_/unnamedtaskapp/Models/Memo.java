@@ -9,7 +9,7 @@ public class Memo extends StorableObject implements Comparable {
 
     private boolean parent;
     private boolean urgent;
-    private List<Memo> children;
+    private List children;
     private Timestamp timeCreated;
     private Timestamp lastUpdated;
 
@@ -39,20 +39,8 @@ public class Memo extends StorableObject implements Comparable {
         return this;
     }
 
-    public List<Memo> getChildren() {
+    public List getChildren() {
         return children;
-    }
-
-    public <T extends Memo> List<T> getChildren(Class<T> klass) {
-        if (getChildren() == null) {
-            return null;
-        } else {
-            List<T> ts = new ArrayList<>();
-            for (Memo memo : children){
-                ts.add(klass.cast(memo));
-            }
-            return ts;
-        }
     }
 
     public Memo setChildren(List<Memo> children) {
@@ -84,14 +72,15 @@ public class Memo extends StorableObject implements Comparable {
      *
      * Note: this will only work properly if calling Memo is a parent
      */
-    public Memo addChild(Memo child){
+    public <T extends StorableObject> Memo addChild(T child){
         if (isParent()){
             if (children == null){
                 children = new ArrayList<>();
             }
             children.add(child);
             if (child.getId() != null){
-                setLastUpdated(child.getLastUpdated());
+                Memo memo = ((Memo) child);
+                setLastUpdated(memo.getLastUpdated());
             }
             return this;
         } else {
@@ -101,16 +90,23 @@ public class Memo extends StorableObject implements Comparable {
 
     /**
      * @param position
+     * @param aClass
+     * @param <T>
      * @return the child memo in the required position. Will return null if calling memo is not a parent
      *
      * Note: this will only work properly if calling Memo is a parent
      */
-    public Memo getChild(int position){
+    public <T extends StorableObject> T getChild(int position, Class<T> aClass){
         if (isParent() && children != null){
-            return children.get(position);
+            Object o =  children.get(position);
+            return aClass.cast(o);
         } else {
             return null;
         }
+    }
+
+    public Memo getChild(int position){
+        return getChild(position, Memo.class);
     }
 
     @Override
