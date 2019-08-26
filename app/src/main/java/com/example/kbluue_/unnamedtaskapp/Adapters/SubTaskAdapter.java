@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.SubTask;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
-import com.example.kbluue_.unnamedtaskapp.Utils.ArraysUtil;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Arrays;
@@ -99,7 +98,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     .addOnClickListener(R.id.btn_right, subTask.getId() == null
                             ? v -> {}
                             : v -> {
-                        ArraysUtil.remove(getTask().getChildren(), subTask);
+                        getTask().removeChild(subTask);
                         updateSubtaskList();})
                     .addOnClickListener(R.id.sub_task, v -> makeEditable());
         }
@@ -125,6 +124,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                         subTask.setName(newName);
                         System.out.println(getTask().getChildren().length + " : xIOx");
                         getTask().addChild(subTask);
+                        getTask().save(context);
                         System.out.println(getTask().getChildren().length + " : xIOx");
                         Toast.makeText(context, "New SubTask Created", Toast.LENGTH_SHORT).show();
                         updateSubtaskList();

@@ -16,6 +16,7 @@ public class Task extends Memo implements HasChildren {
 
     public Task(Context context){
         super(context, "Task");
+        addChild(new SubTask());
     }
 
     public boolean isDone() {
@@ -76,12 +77,13 @@ public class Task extends Memo implements HasChildren {
         return children;
     }
 
-    public Task setChildren(SubTask[] children) {
-        this.children = children;
-        return this;
+    @Override
+    public void setChildren(Memo[] children) {
+        this.children = (SubTask[]) children;
     }
 
-    public void addChild(SubTask child) {
+    @Override
+    public void addChild(Memo child) {
         int len = 0;
         if (children != null) {
             len = children.length;
@@ -90,15 +92,35 @@ public class Task extends Memo implements HasChildren {
         for (int i = 0; i < len; i++) {
             objects[i] = children[i];
         }
-        objects[len] = child;
+        objects[len] = (SubTask) child;
         this.children = objects;
+    }
+
+    @Override
+    public <T extends Memo> void removeChild(T child) {
+        int len = 0, index = 0;
+        if (children != null) {
+            len = children.length - 1;
+        }
+        SubTask[] subTasks = new SubTask[len];
+        for (SubTask subTask : getChildren()){
+            if (!subTask.equals(child)){
+                try {
+                    subTasks[index++] = subTask;
+                } catch (ArrayIndexOutOfBoundsException e){
+                    return;
+                }
+            }
+        }
+        setChildren(subTasks);
     }
 
     @Override
     public SubTask getChild(int index) {
         if (children != null) {
             return children[index];
+        } else {
+            return null;
         }
-        return children[index];
     }
 }
