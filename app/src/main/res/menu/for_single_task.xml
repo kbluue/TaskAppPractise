@@ -9,6 +9,12 @@
         app:showAsAction="always"/>
 
     <item
+        android:title="@string/edit"
+        android:icon="@drawable/ic_edit"
+        android:id="@+id/sv_edit_menu"
+        app:showAsAction="always"/>
+
+    <item
         android:title="@string/delete"
         android:icon="@drawable/ic_delete"
         android:id="@+id/sv_delete_menu"
