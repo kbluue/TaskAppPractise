@@ -28,51 +28,6 @@ public class Task extends Memo implements HasChildren {
     }
 
     @Override
-    public void save(Context context) {
-        Set<String> taskIds = StorableObject.getPref(context)
-                .getStringSet("taskIds", new HashSet<>());
-        taskIds.add(getId());
-        StorableObject.getPref(context)
-                .edit()
-                .putStringSet("taskIds", taskIds)
-                .apply();
-        super.save(context);
-    }
-
-    public static Task getInstance(Context context, String id) {
-        return (Task) getInstance(context, id, Task.class);
-    }
-
-    public void toggleDone(){
-        setDone(!isDone());
-    }
-
-    public String getCompletedCount(){
-        if (getChildren() == null){
-            return "";
-        } else {
-            int completed = 0;
-            for (SubTask task : getChildren()){
-                if (task.isDone()){
-                    completed++;
-                }
-            }
-            return completed + "/" + (getChildren().length - 1);
-        }
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        if (o instanceof Task) {
-            Task task = (Task) o;
-            if (task.isDone() ^ this.isDone()){
-                return task.isDone() ? -1 : 1;
-            }
-        }
-        return super.compareTo(o);
-    }
-
-    @Override
     public SubTask[] getChildren() {
         return children;
     }
@@ -80,6 +35,15 @@ public class Task extends Memo implements HasChildren {
     @Override
     public void setChildren(Memo[] children) {
         this.children = (SubTask[]) children;
+    }
+
+    @Override
+    public SubTask getChild(int index) {
+        if (children != null) {
+            return children[index];
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -116,11 +80,47 @@ public class Task extends Memo implements HasChildren {
     }
 
     @Override
-    public SubTask getChild(int index) {
-        if (children != null) {
-            return children[index];
+    public void save(Context context) {
+        Set<String> taskIds = StorableObject.getPref(context)
+                .getStringSet("taskIds", new HashSet<>());
+        taskIds.add(getId());
+        StorableObject.getPref(context)
+                .edit()
+                .putStringSet("taskIds", taskIds)
+                .apply();
+        super.save(context);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Task) {
+            Task task = (Task) o;
+            if (task.isDone() ^ this.isDone()){
+                return task.isDone() ? -1 : 1;
+            }
+        }
+        return super.compareTo(o);
+    }
+
+    public static Task getInstance(Context context, String id) {
+        return (Task) getInstance(context, id, Task.class);
+    }
+
+    public void toggleDone(){
+        setDone(!isDone());
+    }
+
+    public String getCompletedCount(){
+        if (getChildren() == null){
+            return "";
         } else {
-            return null;
+            int completed = 0;
+            for (SubTask task : getChildren()){
+                if (task.isDone()){
+                    completed++;
+                }
+            }
+            return completed + "/" + (getChildren().length - 1);
         }
     }
 }

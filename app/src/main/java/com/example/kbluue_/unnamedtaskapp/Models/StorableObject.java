@@ -37,7 +37,7 @@ public class StorableObject {
         this.name = name;
     }
 
-    public static String getAppName(Context context){
+    private static String getAppName(Context context){
         return context.getString(R.string.app_name);
     }
 
@@ -45,7 +45,7 @@ public class StorableObject {
         return context.getSharedPreferences(getAppName(context), Context.MODE_PRIVATE);
     }
 
-    public static int getUID(Context context){
+    private static int getUID(Context context){
         int lastUID = getPref(context).getInt("UID", 0);
         int UID = ++lastUID;
         getPref(context).edit()
