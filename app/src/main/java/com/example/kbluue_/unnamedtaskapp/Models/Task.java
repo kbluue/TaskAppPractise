@@ -42,7 +42,7 @@ public class Task extends Memo implements HasChildren {
     @Override
     public SubTask getChild(int index) {
         if (children != null) {
-            return children[index];
+            return getChildren()[index];
         } else {
             return null;
         }
@@ -56,7 +56,11 @@ public class Task extends Memo implements HasChildren {
         }
         SubTask[] subTasks = new SubTask[len + 1];
         for (int i = 0; i < len; i++) {
-            subTasks[i] = children[i];
+            if (child.equals(getChild(i))){
+                children[i] = (SubTask) child;
+                return;
+            }
+            subTasks[i] = getChild(i);
         }
         subTasks[len] = (SubTask) child;
         setChildren(subTasks);

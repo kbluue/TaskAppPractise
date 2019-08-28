@@ -87,4 +87,12 @@ public class ViewConfig {
         }
         return this;
     }
+
+    public ViewConfig addOnFocusListener(int viewId, View.OnFocusChangeListener listener){
+        View v = getView(viewId);
+        if (v != null){
+            v.setOnFocusChangeListener(listener);
+        }
+        return this;
+    }
 }

@@ -22,7 +22,6 @@
         android:layout_toEndOf="@id/btn_left"
         android:layout_toStartOf="@id/btn_right"
         android:inputType="none"
-        android:focusable="false"
         android:selectAllOnFocus="true"
         android:id="@+id/sub_task"/>
 

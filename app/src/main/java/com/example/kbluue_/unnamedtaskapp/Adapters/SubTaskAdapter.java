@@ -1,12 +1,10 @@
 package com.example.kbluue_.unnamedtaskapp.Adapters;
 
 import android.content.Context;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,6 +74,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         }
 
         public SubTask getSubTask() {
+            getTask().setChanged();
             return subTask;
         }
 
@@ -84,49 +83,30 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         }
 
         public void bind(){
-            config.getView(R.id.sub_task).setVisibility(subTask.getId() == null ? View.INVISIBLE : View.VISIBLE);
-            config.bind(R.id.btn_left, subTask.getId() != null
-                            ? subTask.isDone() ? R.drawable.ic_done : R.drawable.ic_not_done : R.drawable.ic_add)
-                    .bind(R.id.btn_right, subTask.getId() != null ? R.drawable.ic_delete_color : 0)
-                    .bind(R.id.sub_task, subTask.getName())
-                    .addOnClickListener(R.id.btn_left, subTask.getId() == null
-                            ? v -> makeEditable()
+            config.getView(R.id.sub_task).setVisibility(getSubTask().getId() == null ? View.INVISIBLE : View.VISIBLE);
+            config.bind(R.id.btn_left, getSubTask().getId() != null
+                            ? getSubTask().isDone() ? R.drawable.ic_done : R.drawable.ic_not_done : R.drawable.ic_add)
+                    .bind(R.id.btn_right, getSubTask().getId() != null ? R.drawable.ic_delete_color : 0)
+                    .bind(R.id.sub_task, getSubTask().getName())
+                    .addOnClickListener(R.id.btn_left, getSubTask().getId() == null
+                            ? v -> {
+                        getTask().addChild(new SubTask(context));
+                        updateSubtaskList();
+                    }
                             : v -> {
-                        subTask.toggleDone();
+                        getSubTask().toggleDone();
                         refresh();
                     })
-                    .addOnClickListener(R.id.btn_right, subTask.getId() == null
+                    .addOnClickListener(R.id.btn_right, getSubTask().getId() == null
                             ? v -> {}
                             : v -> {
-                        getTask().removeChild(subTask);
+                        getTask().removeChild(getSubTask());
                         updateSubtaskList();})
-                    .addOnClickListener(R.id.sub_task, v -> makeEditable());
-        }
-
-        private void makeEditable(){
-            config.addOnClickListener(R.id.sub_task, v -> {});
-            EditText editText = (EditText) config.getView(R.id.sub_task);
-            if (subTask.getId() == null) {
-                subTask = new SubTask(context);
-                editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                editText.selectAll();
-                editText.setVisibility(View.VISIBLE);
-            }
-            editText.setFocusableInTouchMode(true);
-            config.bind(R.id.btn_left, R.drawable.ic_clear)
-                    .bind(R.id.btn_right, R.drawable.ic_add)
-                    .bind(R.id.sub_task, subTask.getName())
-                    .addOnClickListener(R.id.btn_left, v -> {
-                        config.bind(R.id.sub_task, "");
-                    })
-                    .addOnClickListener(R.id.btn_right, v -> {
-                        String newName = ((EditText) config.getView(R.id.sub_task)).getText().toString();
-                        subTask.setName(newName);
-                        System.out.println(getTask().getChildren().length + " : xIOx");
-                        getTask().addChild(subTask);
-                        System.out.println(getTask().getChildren().length + " : xIOx");
-                        Toast.makeText(context, "New SubTask Created", Toast.LENGTH_SHORT).show();
-                        updateSubtaskList();
+                    .addOnFocusListener(R.id.sub_task, (v, hasFocus) -> {
+                        if (!hasFocus){
+                            TextView view = (TextView) v;
+                            getSubTask().setName(view.getText().toString());
+                        }
                     });
         }
     }
