@@ -19,14 +19,24 @@ import java.util.Set;
 public class TaskListActivity extends BaseActivity implements HasButtons, HasRecyclerView {
 
     @Override
+    protected void onPause() {
+        TaskAdapter.saveTask();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        TaskAdapter.saveTask();
+        super.onDestroy();
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.layout_task_list;
     }
 
     @Override
     protected void init() {
-        Task task = new Task(this);
-        task.save(this);
         TaskAdapter.tasks = loadTasks();
     }
 

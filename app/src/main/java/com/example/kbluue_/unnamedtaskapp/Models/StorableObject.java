@@ -3,13 +3,13 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.kbluue_.unnamedtaskapp.Interfaces.HasObserver;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.IsObservable;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.google.gson.Gson;
 
 import java.util.Locale;
 
-public class StorableObject implements HasObserver {
+public class StorableObject implements IsObservable {
 
     private String id, name;
     private boolean changed;

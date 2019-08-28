@@ -124,7 +124,6 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                         subTask.setName(newName);
                         System.out.println(getTask().getChildren().length + " : xIOx");
                         getTask().addChild(subTask);
-                        getTask().save(context);
                         System.out.println(getTask().getChildren().length + " : xIOx");
                         Toast.makeText(context, "New SubTask Created", Toast.LENGTH_SHORT).show();
                         updateSubtaskList();

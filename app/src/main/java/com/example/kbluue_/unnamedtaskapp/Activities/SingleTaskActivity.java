@@ -24,6 +24,18 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     int taskIndex;
 
     @Override
+    protected void onPause() {
+        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        super.onDestroy();
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.layout_single_task;
     }

@@ -36,6 +36,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
         return tasks.size();
     }
 
+    public static void saveTask() {
+        for (Task task : tasks){
+            task.notifyAction();
+        }
+    }
+
     public class TaskVH extends RecyclerView.ViewHolder {
 
         public TaskVH(@NonNull View itemView) {

@@ -1,6 +1,6 @@
 package com.example.kbluue_.unnamedtaskapp.Interfaces;
 
-public interface HasObserver {
+public interface IsObservable {
 
     boolean isChanged();
 
@@ -10,7 +10,7 @@ public interface HasObserver {
 
     Runnable getAction();
 
-    default void notifyActions(){
+    default void notifyAction(){
         if (isChanged()) {
             getAction().run();
         }
