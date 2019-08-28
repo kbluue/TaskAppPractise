@@ -25,6 +25,7 @@ public class Task extends Memo implements HasChildren {
 
     public void setDone(boolean done) {
         this.done = done;
+        setChanged();
     }
 
     @Override
@@ -35,6 +36,7 @@ public class Task extends Memo implements HasChildren {
     @Override
     public void setChildren(Memo[] children) {
         this.children = (SubTask[]) children;
+        setChanged();
     }
 
     @Override
@@ -52,12 +54,12 @@ public class Task extends Memo implements HasChildren {
         if (children != null) {
             len = children.length;
         }
-        SubTask[] objects = new SubTask[len + 1];
+        SubTask[] subTasks = new SubTask[len + 1];
         for (int i = 0; i < len; i++) {
-            objects[i] = children[i];
+            subTasks[i] = children[i];
         }
-        objects[len] = (SubTask) child;
-        this.children = objects;
+        subTasks[len] = (SubTask) child;
+        setChildren(subTasks);
     }
 
     @Override
@@ -80,7 +82,7 @@ public class Task extends Memo implements HasChildren {
     }
 
     @Override
-    public void save(Context context) {
+    public void save() {
         Set<String> taskIds = StorableObject.getPref(context)
                 .getStringSet("taskIds", new HashSet<>());
         taskIds.add(getId());
@@ -88,7 +90,7 @@ public class Task extends Memo implements HasChildren {
                 .edit()
                 .putStringSet("taskIds", taskIds)
                 .apply();
-        super.save(context);
+        super.save();
     }
 
     @Override

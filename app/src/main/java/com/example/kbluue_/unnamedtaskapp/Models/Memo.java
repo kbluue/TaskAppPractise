@@ -20,27 +20,27 @@ public class Memo extends StorableObject implements Comparable {
         return urgent;
     }
 
-    public Memo setUrgent(boolean urgent) {
+    public void setUrgent(boolean urgent) {
         this.urgent = urgent;
-        return this;
+        setChanged();
     }
 
     public Timestamp getTimeCreated() {
         return timeCreated;
     }
 
-    public Memo setTimeCreated(Timestamp timeCreated) {
+    public void setTimeCreated(Timestamp timeCreated) {
         this.timeCreated = timeCreated;
-        return this;
+        setChanged();
     }
 
     public Timestamp getLastUpdated() {
         return lastUpdated;
     }
 
-    public Memo setLastUpdated(Timestamp lastUpdated) {
+    public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
-        return this;
+        setChanged();
     }
 
     @Override
