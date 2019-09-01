@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
 import com.example.kbluue_.unnamedtaskapp.Models.SubTask;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
@@ -19,12 +20,12 @@ import java.util.Arrays;
 public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskVH> {
 
     private static SubTask[] subTasks;
-    private int index;
     private RecyclerView.LayoutManager manager;
+    private SingleTaskActivity parent;
 
-    public SubTaskAdapter(int index, RecyclerView.LayoutManager manager){
-        this.index = index;
-        this.manager = manager;
+    public SubTaskAdapter(SingleTaskActivity parent){
+        this.parent = parent;
+        this.manager = parent.getLayoutManager();
         updateSubtaskList();
     }
 
@@ -51,7 +52,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     }
 
     private Task getTask(){
-        return TaskAdapter.tasks.get(index);
+        return TaskAdapter.tasks.get(parent.getTaskIndex());
     }
 
     private void updateSubtaskList(){

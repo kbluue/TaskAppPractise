@@ -23,6 +23,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+    private SubTaskAdapter adapter;
 
     public int getTaskIndex() {
         return taskIndex;
@@ -74,7 +75,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return new SubTaskAdapter(getTaskIndex(), layoutManager);
+        if (adapter == null) {
+            adapter = new SubTaskAdapter(this);
+        }
+        return adapter;
     }
 
     @Override
@@ -88,6 +92,8 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
         if (getTaskIndex() < 0) {
             TaskAdapter.tasks.add(new Task(this));
             Collections.sort(TaskAdapter.tasks);
+            setTaskIndex(0);
+        } else if (getTaskIndex() > 4){
             setTaskIndex(0);
         }
 
