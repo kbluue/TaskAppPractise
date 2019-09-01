@@ -28,10 +28,12 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
     public int getTaskIndex() {
+        wtf(getString(app_name), "SingleTaskActivity.getTaskIndex: " + this.taskIndex );
         return taskIndex;
     }
 
     public void setTaskIndex(int taskIndex) {
+        wtf(getString(app_name), "SingleTaskActivity.setTaskIndex: " + this.taskIndex + " vs " + taskIndex);
         this.taskIndex = taskIndex;
     }
 
@@ -65,9 +67,15 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     @Override
     public List<ClickableAction> setMenuActions() {
         return new ClickableAction.Factory()
-                .addMember(R.id.sv_prev_menu, (Runnable) () -> init(--taskIndex))
-                .addMember(R.id.sv_next_menu, (Runnable) () -> init(++taskIndex))
-                .addMember(R.id.sv_edit_menu, (Runnable) () -> wtf(getString(app_name), "SingleTaskActivity.setMenuActions: Edit buttn pressed"))
+                .addMember(R.id.sv_prev_menu, (Runnable) () -> {
+                    setTaskIndex(getTaskIndex() - 1);
+                    init(getTaskIndex());
+                })
+                .addMember(R.id.sv_next_menu, (Runnable) () -> {
+                    setTaskIndex(getTaskIndex() + 1);
+                    init(getTaskIndex());
+                })
+                .addMember(R.id.sv_edit_menu, (Runnable) () -> wtf(getString(app_name), "SingleTaskActivity.setMenuActions: Edit button pressed"))
                 .deliver();
     }
 
@@ -88,12 +96,11 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     private void init(int in){
         setTaskIndex(in);
+        wtf(getString(app_name), "SingleTaskActivity.init: " + getTaskIndex());
 
         if (getTaskIndex() < 0) {
             TaskAdapter.tasks.add(new Task(this));
             Collections.sort(TaskAdapter.tasks);
-            setTaskIndex(0);
-        } else if (getTaskIndex() > 4){
             setTaskIndex(0);
         }
 
