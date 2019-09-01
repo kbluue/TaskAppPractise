@@ -51,9 +51,9 @@ public class Memo extends StorableObject implements Comparable {
                     thisTS = getTimeCreated();
             if (anotherMemoTS == null ^ thisTS == null){
                 if (thisTS == null){
-                    return 1;
-                } else {
                     return -1;
+                } else {
+                    return 1;
                 }
             } else {
                 if (thisTS == null){
