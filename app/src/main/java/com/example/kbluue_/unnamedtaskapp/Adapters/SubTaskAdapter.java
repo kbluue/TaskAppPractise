@@ -55,7 +55,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
         return TaskAdapter.tasks.get(parent.getTaskIndex());
     }
 
-    private void updateSubtaskList(){
+    public void updateSubtaskList(){
         try {
             subTasks = getTask().getChildren();
         } catch (ArrayIndexOutOfBoundsException ignored){}

@@ -46,6 +46,11 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     }
 
     @Override
+    public SubTaskAdapter getBaseAdapter() {
+        return adapter;
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.layout_single_task;
     }
@@ -101,6 +106,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
         ViewConfig.getInstance(this)
                 .bind(R.id.sv_task_name, task.getName());
+
+        if (getBaseAdapter() != null) {
+            getBaseAdapter().updateSubtaskList();
+        }
     }
 
     public static void start(Context context, int taskPosition) {
