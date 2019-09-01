@@ -22,6 +22,7 @@ import java.util.List;
 public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecyclerView {
 
     int taskIndex;
+    final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
     @Override
     protected void onPause() {
@@ -73,12 +74,12 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return new SubTaskAdapter(taskIndex);
+        return new SubTaskAdapter(taskIndex, layoutManager);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(this);
+        return layoutManager;
     }
 
     public static void start(Context context, int taskPosition) {

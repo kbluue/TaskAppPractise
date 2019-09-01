@@ -23,6 +23,7 @@
         android:layout_toStartOf="@id/btn_right"
         android:inputType="none"
         android:selectAllOnFocus="true"
+        android:focusableInTouchMode="true"
         android:id="@+id/sub_task"/>
 
 </RelativeLayout>

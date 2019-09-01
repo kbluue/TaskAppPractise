@@ -20,9 +20,11 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
     private static SubTask[] subTasks;
     private int index;
+    private RecyclerView.LayoutManager manager;
 
-    public SubTaskAdapter(int index){
+    public SubTaskAdapter(int index, RecyclerView.LayoutManager manager){
         this.index = index;
+        this.manager = manager;
         updateSubtaskList();
     }
 
@@ -38,6 +40,9 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     public void onBindViewHolder(@NonNull SubTaskVH holder, int position) {
         holder.setSubTask(subTasks[position]);
         holder.bind();
+        if (position == 1){
+            holder.itemView.setFocusable(true);
+        }
     }
 
     @Override
@@ -92,6 +97,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                             ? v -> {
                         getTask().addChild(new SubTask(context));
                         updateSubtaskList();
+                        manager.findViewByPosition(1).findViewById(R.id.sub_task).requestFocus();
+
                     }
                             : v -> {
                         getSubTask().toggleDone();

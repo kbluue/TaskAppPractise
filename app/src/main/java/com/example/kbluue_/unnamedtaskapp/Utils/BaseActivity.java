@@ -138,7 +138,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public Runnable findMenuActionById(int id){
-        return findActionById(menuActions, id);
+        if (menuActions == null) {
+            return () -> Toast.makeText(this, "MenuActions not registered", Toast.LENGTH_SHORT).show();
+        } else {
+            return findActionById(menuActions, id);
+        }
     }
 
     public Runnable findButtonActionById(int id){
