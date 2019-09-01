@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning" >
-        <activity android:name=".Activities.SingleTaskActivity" />
+        <activity android:name=".Activities.SingleTaskActivity"
+            android:noHistory="true"/>
         <activity android:name=".Activities.TaskListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

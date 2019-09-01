@@ -44,7 +44,7 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
     public List<ClickableAction> getButtonActions() {
         return new ClickableAction.Factory()
                 .addMember(R.id.add_task,
-                        (Runnable) () -> SingleTaskActivity.start(this,-1), false)
+                        (Runnable) () -> SingleTaskActivity.start(this,-1))
                 .deliver();
     }
 

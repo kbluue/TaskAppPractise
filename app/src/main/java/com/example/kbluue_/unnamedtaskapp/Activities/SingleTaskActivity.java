@@ -68,12 +68,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     public List<ClickableAction> setMenuActions() {
         return new ClickableAction.Factory()
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> {
-                    setTaskIndex(getTaskIndex() - 1);
-                    init(getTaskIndex());
+                    init(getTaskIndex() - 1);
                 })
                 .addMember(R.id.sv_next_menu, (Runnable) () -> {
-                    setTaskIndex(getTaskIndex() + 1);
-                    init(getTaskIndex());
+                    init(getTaskIndex() + 1);
                 })
                 .addMember(R.id.sv_edit_menu, (Runnable) () -> wtf(getString(app_name), "SingleTaskActivity.setMenuActions: Edit button pressed"))
                 .deliver();
@@ -110,6 +108,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                 .bind(R.id.sv_task_name, task.getName());
 
         if (getBaseAdapter() != null) {
+            wtf(getString(app_name), "SingleTaskActivity.init: @baseAdapter != null" + getTaskIndex());
             ((SubTaskAdapter) getBaseAdapter())
                     .updateSubtaskList();
         }
