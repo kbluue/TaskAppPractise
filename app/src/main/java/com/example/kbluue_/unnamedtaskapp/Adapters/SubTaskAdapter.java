@@ -98,8 +98,6 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                             ? v -> {
                         getTask().addChild(new SubTask(context));
                         updateSubtaskList();
-                        manager.findViewByPosition(1).findViewById(R.id.sub_task).requestFocus();
-
                     }
                             : v -> {
                         getSubTask().toggleDone();

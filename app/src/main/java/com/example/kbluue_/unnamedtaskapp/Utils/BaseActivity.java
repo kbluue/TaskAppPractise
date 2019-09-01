@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +13,12 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
+import com.example.kbluue_.unnamedtaskapp.R;
 
 import java.util.List;
+
+import static android.util.Log.wtf;
+import static com.example.kbluue_.unnamedtaskapp.R.string.app_name;
 
 /**
  * Created by _kbluue_ on 8/2/2019.
@@ -90,17 +93,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        wtf(getString(app_name), "BaseActivity.onOptionsItemSelected: menu pressed");
         if (item.getItemId() == android.R.id.home){
             onBackPressed();
             return true;
         } else {
             Runnable action = findMenuActionById(item.getItemId());
+            wtf(getString(R.string.app_name), "BaseActivity.onOptionsItemSelected: Action selected");
             if (action == null) {
-                Toast.makeText(this,
-                        item.getTitle() + ": Action not defined", Toast.LENGTH_SHORT).show();
+                wtf(getString(R.string.app_name), "BaseActivity.onOptionsItemSelected: Action not defined");
                 return false;
             } else {
                 action.run();
+                wtf(getString(R.string.app_name), "BaseActivity.onOptionsItemSelected: Action should run");
                 return true;
             }
         }
@@ -120,7 +125,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onButtonPressed(View view){
         Runnable runnable = findButtonActionById(view.getId());
         if (runnable == null) {
-            Toast.makeText(this, "Action not defined", Toast.LENGTH_SHORT).show();
+            wtf(getString(R.string.app_name), "BaseActivity.onButtonPressed: Button Action not defined");
         } else {
             runnable.run();
         }
@@ -133,14 +138,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             action = list.get(index);
             return action.getAction();
         } else {
-            return () -> Toast.makeText(this, "View not registered", Toast.LENGTH_SHORT).show();
+            return () -> wtf(getString(R.string.app_name), "BaseActivity.findActionById: View not registered");
         }
     }
 
     public Runnable findMenuActionById(int id){
         if (menuActions == null) {
-            return () -> Toast.makeText(this, "MenuActions not registered", Toast.LENGTH_SHORT).show();
+            return () -> wtf(getString(R.string.app_name), "BaseActivity.findMenuActionById: MenuActions not registered");
         } else {
+            wtf(getString(R.string.app_name), "BaseActivity.findMenuActionById: " + id + ": presseded");
             return findActionById(menuActions, id);
         }
     }

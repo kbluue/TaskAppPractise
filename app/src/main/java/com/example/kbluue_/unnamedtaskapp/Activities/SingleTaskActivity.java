@@ -19,6 +19,9 @@ import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 import java.util.Collections;
 import java.util.List;
 
+import static android.util.Log.wtf;
+import static com.example.kbluue_.unnamedtaskapp.R.string.app_name;
+
 public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecyclerView {
 
     int taskIndex;
@@ -64,6 +67,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
         return new ClickableAction.Factory()
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> init(--taskIndex))
                 .addMember(R.id.sv_next_menu, (Runnable) () -> init(++taskIndex))
+                .addMember(R.id.sv_edit_menu, (Runnable) () -> wtf(getString(app_name), "SingleTaskActivity.setMenuActions: Edit buttn pressed"))
                 .deliver();
     }
 
