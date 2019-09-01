@@ -43,15 +43,19 @@ public class ClickableAction {
 
     public static class Factory implements ListFactory {
 
-        public static List<ClickableAction> actionList = new ArrayList<>();
+        private static List<ClickableAction> actionList = new ArrayList<>();
 
         @Override
         public Factory addMember(Object... initialVariables) {
-            if (getConstructorType(initialVariables) == 0){
+            if (getConstructorType(initialVariables) == 3){
                 int viewId = (int) initialVariables[0];
                 Runnable action = (Runnable) initialVariables[1];
                 boolean isAdmin = (boolean) initialVariables[2];
                 actionList.add(new ClickableAction(viewId, action, isAdmin));
+            } else if (getConstructorType(initialVariables) == 2){
+                int viewId = (int) initialVariables[0];
+                Runnable action = (Runnable) initialVariables[1];
+                actionList.add(new ClickableAction(viewId, action, false));
             } else if (getConstructorType(initialVariables) == 1){
                 int viewId = (int) initialVariables[0];
                 actionList.add(new ClickableAction(viewId));
@@ -61,17 +65,7 @@ public class ClickableAction {
 
         @Override
         public int getConstructorType(Object... initialVariables) {
-            if (initialVariables.length == 3
-                    && initialVariables[0] instanceof Integer
-                    && initialVariables[1] instanceof Runnable
-                    && initialVariables[2] instanceof Boolean) {
-                return 0;
-            } else if (initialVariables.length == 1
-                    && initialVariables[0] instanceof Integer) {
-                return 1;
-            } else {
-                return -1;
-            }
+            return initialVariables.length;
         }
 
         @Override

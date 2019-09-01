@@ -24,15 +24,23 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
+    public int getTaskIndex() {
+        return taskIndex;
+    }
+
+    public void setTaskIndex(int taskIndex) {
+        this.taskIndex = taskIndex;
+    }
+
     @Override
     protected void onPause() {
-        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        TaskAdapter.tasks.get(getTaskIndex()).notifyAction();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        TaskAdapter.tasks.get(getTaskIndex()).notifyAction();
         super.onDestroy();
     }
 
@@ -43,18 +51,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     protected void init() {
-        taskIndex = getIntent().getIntExtra("taskIndex", -1);
-
-        if (taskIndex < 0) {
-            TaskAdapter.tasks.add(new Task(this));
-            Collections.sort(TaskAdapter.tasks);
-            taskIndex = 0;
-        }
-
-        Task task = TaskAdapter.tasks.get(taskIndex);
-
-        ViewConfig.getInstance(this)
-                .bind(R.id.sv_task_name, task.getName());
+        init(getIntent().getIntExtra("taskIndex", -1));
     }
 
     @Override
@@ -64,7 +61,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     public List<ClickableAction> setMenuActions() {
-        return null;
+        return new ClickableAction.Factory()
+                .addMember(R.id.sv_prev_menu, (Runnable) () -> init(--taskIndex))
+                .addMember(R.id.sv_next_menu, (Runnable) () -> init(++taskIndex))
+                .deliver();
     }
 
     @Override
@@ -74,12 +74,27 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return new SubTaskAdapter(taskIndex, layoutManager);
+        return new SubTaskAdapter(getTaskIndex(), layoutManager);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return layoutManager;
+    }
+
+    private void init(int in){
+        setTaskIndex(in);
+
+        if (getTaskIndex() < 0) {
+            TaskAdapter.tasks.add(new Task(this));
+            Collections.sort(TaskAdapter.tasks);
+            setTaskIndex(0);
+        }
+
+        Task task = TaskAdapter.tasks.get(getTaskIndex());
+
+        ViewConfig.getInstance(this)
+                .bind(R.id.sv_task_name, task.getName());
     }
 
     public static void start(Context context, int taskPosition) {
