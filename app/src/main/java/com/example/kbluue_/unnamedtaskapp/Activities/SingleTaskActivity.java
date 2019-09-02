@@ -73,7 +73,6 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                 .addMember(R.id.sv_next_menu, (Runnable) () -> {
                     init(getTaskIndex() + 1);
                 })
-                .addMember(R.id.sv_edit_menu, (Runnable) () -> wtf(getString(app_name), "SingleTaskActivity.setMenuActions: Edit button pressed"))
                 .deliver();
     }
 

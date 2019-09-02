@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -99,10 +100,12 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                         getTask().addChild(new SubTask(context));
                         updateSubtaskList();
                         itemView.postDelayed( () -> {
-                            manager.findViewByPosition(1)
-                                .findViewById(R.id.sub_task)
-                                .requestFocus();
-
+                            View view = manager.findViewByPosition(1)
+                                .findViewById(R.id.sub_task);
+                            view.requestFocus();
+                            view.requestFocus();
+                            InputMethodManager imm = (InputMethodManager) parent.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
                         },
                                 200);
                     }
