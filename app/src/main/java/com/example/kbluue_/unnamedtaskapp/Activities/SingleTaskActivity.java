@@ -22,26 +22,18 @@ import java.util.List;
 
 public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecyclerView {
 
-    static int taskIndex;
+    public static int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-
-    public int getTaskIndex() {
-        return taskIndex;
-    }
-
-    public void setTaskIndex(int taskIndex) {
-        SingleTaskActivity.taskIndex = taskIndex;
-    }
 
     @Override
     protected void onPause() {
-        TaskAdapter.tasks.get(getTaskIndex()).notifyAction();
+        TaskAdapter.tasks.get(taskIndex).notifyAction();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        TaskAdapter.tasks.get(getTaskIndex()).notifyAction();
+        TaskAdapter.tasks.get(taskIndex).notifyAction();
         super.onDestroy();
     }
 
@@ -49,9 +41,9 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenu().findItem(R.id.sv_prev_menu)
-                .setVisible(getTaskIndex() != 0);
+                .setVisible(taskIndex != 0);
         getMenu().findItem(R.id.sv_next_menu)
-                .setVisible(getTaskIndex() != TaskAdapter.tasks.size() - 1);
+                .setVisible(taskIndex != TaskAdapter.tasks.size() - 1);
         return true;
     }
 
@@ -62,15 +54,13 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     protected void init() {
-        taskIndex = getIntent().getIntExtra("taskIndex", -1);
-
-        if (getTaskIndex() < 0) {
+        if (taskIndex < 0) {
             TaskAdapter.tasks.add(new Task(this));
             Collections.sort(TaskAdapter.tasks);
-            setTaskIndex(0);
+            taskIndex = 0;
         }
 
-        Task task = TaskAdapter.tasks.get(getTaskIndex());
+        Task task = TaskAdapter.tasks.get(taskIndex);
 
         ViewConfig.getInstance(this)
                 .bind(R.id.sv_task_name, task.getName());
@@ -84,8 +74,8 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     @Override
     public List<ClickableAction> setMenuActions() {
         return new ClickableAction.Factory()
-                .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, getTaskIndex() - 1))
-                .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, getTaskIndex() + 1))
+                .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, --taskIndex))
+                .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
                 .deliver();
     }
 
@@ -106,7 +96,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     public static void start(Context context, int taskPosition) {
         Intent starter = new Intent(context, SingleTaskActivity.class);
-        starter.putExtra("taskIndex", taskPosition);
+        taskIndex = taskPosition;
         context.startActivity(starter);
     }
 }

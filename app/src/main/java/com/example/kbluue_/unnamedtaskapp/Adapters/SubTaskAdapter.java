@@ -22,10 +22,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
     private static SubTask[] subTasks;
     private RecyclerView.LayoutManager manager;
-    private SingleTaskActivity parent;
 
     public SubTaskAdapter(SingleTaskActivity parent){
-        this.parent = parent;
         this.manager = parent.getLayoutManager();
         updateSubtaskList();
     }
@@ -53,7 +51,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     }
 
     private Task getTask(){
-        return TaskAdapter.tasks.get(parent.getTaskIndex());
+        return TaskAdapter.tasks.get(SingleTaskActivity.taskIndex);
     }
 
     public void updateSubtaskList(){
@@ -104,7 +102,9 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                                 .findViewById(R.id.sub_task);
                             view.requestFocus();
                             view.requestFocus();
-                            InputMethodManager imm = (InputMethodManager) parent.getSystemService(Context.INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) itemView
+                                    .getContext()
+                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
                         },
                                 200);
