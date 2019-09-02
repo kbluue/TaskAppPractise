@@ -62,7 +62,18 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     @Override
     protected void init() {
-        init(getIntent().getIntExtra("taskIndex", -1));
+        taskIndex = getIntent().getIntExtra("taskIndex", -1);
+
+        if (getTaskIndex() < 0) {
+            TaskAdapter.tasks.add(new Task(this));
+            Collections.sort(TaskAdapter.tasks);
+            setTaskIndex(0);
+        }
+
+        Task task = TaskAdapter.tasks.get(getTaskIndex());
+
+        ViewConfig.getInstance(this)
+                .bind(R.id.sv_task_name, task.getName());
     }
 
     @Override
@@ -91,26 +102,6 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return layoutManager;
-    }
-
-    private void init(int in){
-        setTaskIndex(in);
-
-        if (getTaskIndex() < 0) {
-            TaskAdapter.tasks.add(new Task(this));
-            Collections.sort(TaskAdapter.tasks);
-            setTaskIndex(0);
-        }
-
-        Task task = TaskAdapter.tasks.get(getTaskIndex());
-
-        ViewConfig.getInstance(this)
-                .bind(R.id.sv_task_name, task.getName());
-
-        if (getBaseAdapter() != null) {
-            ((SubTaskAdapter) getBaseAdapter())
-                    .updateSubtaskList();
-        }
     }
 
     public static void start(Context context, int taskPosition) {
