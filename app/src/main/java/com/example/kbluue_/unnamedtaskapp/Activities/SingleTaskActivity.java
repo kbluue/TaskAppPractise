@@ -20,22 +20,17 @@ import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 import java.util.Collections;
 import java.util.List;
 
-import static android.util.Log.wtf;
-import static com.example.kbluue_.unnamedtaskapp.R.string.app_name;
-
 public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecyclerView {
 
-    int taskIndex;
+    static int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
     public int getTaskIndex() {
-        wtf(getString(app_name), "SingleTaskActivity.getTaskIndex: " + this.taskIndex );
         return taskIndex;
     }
 
     public void setTaskIndex(int taskIndex) {
-        wtf(getString(app_name), "SingleTaskActivity.setTaskIndex: " + this.taskIndex + " vs " + taskIndex);
-        this.taskIndex = taskIndex;
+        SingleTaskActivity.taskIndex = taskIndex;
     }
 
     @Override
@@ -78,12 +73,8 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     @Override
     public List<ClickableAction> setMenuActions() {
         return new ClickableAction.Factory()
-                .addMember(R.id.sv_prev_menu, (Runnable) () -> {
-                    init(getTaskIndex() - 1);
-                })
-                .addMember(R.id.sv_next_menu, (Runnable) () -> {
-                    init(getTaskIndex() + 1);
-                })
+                .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, getTaskIndex() - 1))
+                .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, getTaskIndex() + 1))
                 .deliver();
     }
 
@@ -104,7 +95,6 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
 
     private void init(int in){
         setTaskIndex(in);
-        wtf(getString(app_name), "SingleTaskActivity.init: " + getTaskIndex());
 
         if (getTaskIndex() < 0) {
             TaskAdapter.tasks.add(new Task(this));
@@ -118,7 +108,6 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                 .bind(R.id.sv_task_name, task.getName());
 
         if (getBaseAdapter() != null) {
-            wtf(getString(app_name), "SingleTaskActivity.init: @baseAdapter != null" + getTaskIndex());
             ((SubTaskAdapter) getBaseAdapter())
                     .updateSubtaskList();
         }
