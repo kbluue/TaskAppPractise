@@ -2,6 +2,7 @@ package com.example.kbluue_.unnamedtaskapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Menu;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +48,16 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
     protected void onDestroy() {
         TaskAdapter.tasks.get(getTaskIndex()).notifyAction();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenu().findItem(R.id.sv_prev_menu)
+                .setVisible(getTaskIndex() != 0);
+        getMenu().findItem(R.id.sv_next_menu)
+                .setVisible(getTaskIndex() != TaskAdapter.tasks.size() - 1);
+        return true;
     }
 
     @Override

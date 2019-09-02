@@ -26,9 +26,14 @@ import static android.util.Log.wtf;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private int menuRes;
+    private Menu menu;
     private boolean isAdmin = true;
     private List<ClickableAction> menuActions, buttonActions;
     private RecyclerView.Adapter baseAdapter;
+
+    public Menu getMenu() {
+        return menu;
+    }
 
     public boolean isAdmin() {
         return isAdmin;
@@ -76,6 +81,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+
         if (this instanceof HasMenu){
             HasMenu menuActivity = (HasMenu) this;
             menuRes = menuActivity.setMenuId();
