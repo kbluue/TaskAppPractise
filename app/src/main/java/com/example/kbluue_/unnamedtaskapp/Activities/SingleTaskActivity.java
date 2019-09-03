@@ -3,6 +3,7 @@ package com.example.kbluue_.unnamedtaskapp.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,6 +81,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                 .addMember(R.id.sv_delete_menu, (Runnable) () -> {
                     TaskAdapter.tasks.remove(taskIndex);
                     start(this, taskIndex);
+                })
+                .addMember(R.id.sv_edit_menu, (Runnable) () -> {
+                    TextView view = findViewById(R.id.sv_task_name);
+                    view.requestFocus();
                 })
                 .deliver();
     }
