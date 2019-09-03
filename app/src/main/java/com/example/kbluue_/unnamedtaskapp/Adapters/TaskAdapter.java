@@ -52,7 +52,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
                     .bind(R.id.task_name, task.getName())
                     .bind(R.id.task_state, task.isDone() ? R.drawable.ic_done : R.drawable.ic_not_done)
                     .bind(R.id.sub_task_count, task.getCompletedCount())
-                    .bind(R.id.task_timestamp, task.getLastUpdated().print("hh:mm"))
+                    .bind(R.id.task_timestamp, task.getLastUpdated().print())
                     .bind(R.id.task_delete, R.drawable.ic_delete_color)
                     .addOnClickListener(R.id.task_state, v -> {
                         task.toggleDone();
