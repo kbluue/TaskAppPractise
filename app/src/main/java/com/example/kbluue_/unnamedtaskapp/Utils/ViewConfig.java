@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kbluue_.unnamedtaskapp.Interfaces.TextChangeListener;
 import com.squareup.picasso.Picasso;
 
 public class ViewConfig {
@@ -92,6 +94,17 @@ public class ViewConfig {
         View v = getView(viewId);
         if (v != null){
             v.setOnFocusChangeListener(listener);
+        }
+        return this;
+    }
+
+    public ViewConfig addTextListener(int viewId, TextChangeListener listener){
+        View v = getView(viewId);
+        if (v != null) {
+            if (v instanceof TextView) {
+                TextView editText = (EditText) v;
+                editText.addTextChangedListener(listener.WATCHER());
+            }
         }
         return this;
     }

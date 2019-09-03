@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +22,8 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     private static SubTask[] subTasks;
     private RecyclerView.LayoutManager manager;
 
-    public SubTaskAdapter(SingleTaskActivity parent){
-        this.manager = parent.getLayoutManager();
+    public SubTaskAdapter(RecyclerView.LayoutManager manager){
+        this.manager = manager;
         updateSubtaskList();
     }
 
@@ -118,12 +117,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                             : v -> {
                         getTask().removeChild(getSubTask());
                         updateSubtaskList();})
-                    .addOnFocusListener(R.id.sub_task, (v, hasFocus) -> {
-                        if (!hasFocus){
-                            TextView view = (TextView) v;
-                            getSubTask().setName(view.getText().toString());
-                        }
-                    });
+                    .addTextListener(R.id.sub_task, (s, start, before, count) -> getSubTask().setName(s.toString()));
         }
     }
 }
