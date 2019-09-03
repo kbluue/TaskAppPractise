@@ -98,6 +98,18 @@ public class Task extends Memo implements HasChildren {
     }
 
     @Override
+    public void delete() {
+        Set<String> taskIds = StorableObject.getPref(context)
+                .getStringSet("taskIds", new HashSet<>());
+        taskIds.remove(getId());
+        StorableObject.getPref(context)
+                .edit()
+                .putStringSet("taskIds", taskIds)
+                .apply();
+        super.delete();
+    }
+
+    @Override
     public int compareTo(Object o) {
         if (o instanceof Task) {
             Task task = (Task) o;
