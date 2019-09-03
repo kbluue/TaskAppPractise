@@ -59,6 +59,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
                         notifyDataSetChanged();
                     })
                     .addOnClickListener(R.id.task_delete, v -> {
+                        task.delete();
                         tasks.remove(task);
                         notifyDataSetChanged();
                     });

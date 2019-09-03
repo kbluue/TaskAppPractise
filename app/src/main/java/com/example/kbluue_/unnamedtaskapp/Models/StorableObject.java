@@ -98,7 +98,11 @@ public class StorableObject implements IsObservable {
                 .apply();
     }
 
-    public void delete(){}
+    public void delete(){
+        getPref(getContext()).edit()
+                .remove(getId())
+                .apply();
+    }
 
     public static <T extends StorableObject> StorableObject getInstance(Context context, String id,Class<T> aClass) {
         String JsonValue =  StorableObject.getPref(context)

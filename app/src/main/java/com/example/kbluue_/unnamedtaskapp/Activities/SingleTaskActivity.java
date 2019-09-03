@@ -59,6 +59,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
             TaskAdapter.tasks.add(new Task(this));
             Collections.sort(TaskAdapter.tasks);
             taskIndex = 0;
+            TextView view = findViewById(R.id.sv_task_name);
+            view.postDelayed(view::requestFocus, 200);
+        } else if (taskIndex >= TaskAdapter.tasks.size()){
+            taskIndex = TaskAdapter.tasks.size() - 1;
         }
 
         Task task = TaskAdapter.tasks.get(taskIndex);
@@ -79,6 +83,7 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, --taskIndex))
                 .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
                 .addMember(R.id.sv_delete_menu, (Runnable) () -> {
+                    TaskAdapter.tasks.get(taskIndex).delete();
                     TaskAdapter.tasks.remove(taskIndex);
                     start(this, taskIndex);
                 })

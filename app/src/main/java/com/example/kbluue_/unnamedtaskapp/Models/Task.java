@@ -87,25 +87,13 @@ public class Task extends Memo implements HasChildren {
 
     @Override
     public void save() {
-        Set<String> taskIds = StorableObject.getPref(context)
-                .getStringSet("taskIds", new HashSet<>());
-        taskIds.add(getId());
-        StorableObject.getPref(context)
-                .edit()
-                .putStringSet("taskIds", taskIds)
-                .apply();
+        updateTaskIds(true);
         super.save();
     }
 
     @Override
     public void delete() {
-        Set<String> taskIds = StorableObject.getPref(context)
-                .getStringSet("taskIds", new HashSet<>());
-        taskIds.remove(getId());
-        StorableObject.getPref(context)
-                .edit()
-                .putStringSet("taskIds", taskIds)
-                .apply();
+        updateTaskIds(false);
         super.delete();
     }
 
@@ -140,5 +128,19 @@ public class Task extends Memo implements HasChildren {
             }
             return completed + "/" + (getChildren().length - 1);
         }
+    }
+
+    private void updateTaskIds(boolean add){
+        Set<String> taskIds = StorableObject.getPref(context)
+                .getStringSet("taskIds", new HashSet<>());
+        if (add) {
+            taskIds.add(getId());
+        } else {
+            taskIds.remove(getId());
+        }
+        StorableObject.getPref(context)
+                .edit()
+                .putStringSet("taskIds", taskIds)
+                .apply();
     }
 }
