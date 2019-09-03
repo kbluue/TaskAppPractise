@@ -11,8 +11,8 @@ import com.example.kbluue_.unnamedtaskapp.Models.StorableObject;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
+import com.example.kbluue_.unnamedtaskapp.Utils.CustomList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -63,10 +63,10 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
         return new LinearLayoutManager(this);
     }
 
-    private List<Task> loadTasks(){
+    private CustomList<Task> loadTasks(){
         Set<String> taskIds = StorableObject.getPref(this)
                 .getStringSet("taskIds", null);
-        List<Task> tasks = new ArrayList<>();
+        CustomList<Task> tasks = new CustomList<>();
         if (taskIds != null) {
             for (String id : taskIds){
                 Task task = Task.getInstance(this, id);

@@ -77,6 +77,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
         return new ClickableAction.Factory()
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, --taskIndex))
                 .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
+                .addMember(R.id.sv_delete_menu, (Runnable) () -> {
+                    TaskAdapter.tasks.remove(taskIndex);
+                    start(this, taskIndex);
+                })
                 .deliver();
     }
 
