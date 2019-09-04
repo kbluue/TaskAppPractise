@@ -36,7 +36,7 @@ public class Timestamp {
                 d2 = format.format(getDate()).split("-");
         if (Arrays.equals(d1, d2)){
             return "hh:mm a";
-        } else if (d1[0].equals(d2[0]) && d1[1].equals(d2[1])){
+        } else if (d1[2].equals(d2[2]) && d1[1].equals(d2[1])){
             int daysApart = Integer.parseInt(d1[2]) - Integer.parseInt(d2[2]);
             if (daysApart == 1){
                 return "Yesterday";
@@ -45,7 +45,7 @@ public class Timestamp {
             } else {
                 return daysApart + " days ago";
             }
-        } else if (d1[0].equals(d2[0])) {
+        } else if (d1[2].equals(d2[2])) {
             return "MMM d";
         } else {
             return "d-MMM-YY";
