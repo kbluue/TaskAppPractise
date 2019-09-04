@@ -3,6 +3,7 @@ package com.example.kbluue_.unnamedtaskapp.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
+import com.example.kbluue_.unnamedtaskapp.Utils.ServiceUtils;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Collections;
@@ -59,8 +61,9 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
             TaskAdapter.tasks.add(new Task(this));
             Collections.sort(TaskAdapter.tasks);
             taskIndex = 0;
-            TextView view = findViewById(R.id.sv_task_name);
+            EditText view = findViewById(R.id.sv_task_name);
             view.postDelayed(view::requestFocus, 200);
+            ServiceUtils.showKeyboard(view);
         } else if (taskIndex >= TaskAdapter.tasks.size()){
             taskIndex = TaskAdapter.tasks.size() - 1;
         }

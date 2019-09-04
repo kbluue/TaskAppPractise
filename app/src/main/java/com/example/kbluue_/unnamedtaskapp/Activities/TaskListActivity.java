@@ -13,6 +13,7 @@ import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
 import com.example.kbluue_.unnamedtaskapp.Utils.CustomList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -72,6 +73,7 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
                 Task task = Task.getInstance(this, id);
                 tasks.add(task);
             }
+            Collections.sort(tasks);
         }
         return tasks;
     }

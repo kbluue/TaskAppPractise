@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +13,7 @@ import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
 import com.example.kbluue_.unnamedtaskapp.Models.SubTask;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
+import com.example.kbluue_.unnamedtaskapp.Utils.ServiceUtils;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Arrays;
@@ -97,14 +98,11 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                         getTask().addChild(new SubTask(context));
                         updateSubtaskList();
                         itemView.postDelayed( () -> {
-                            View view = manager.findViewByPosition(1)
+                            EditText view = manager.findViewByPosition(1)
                                 .findViewById(R.id.sub_task);
                             view.requestFocus();
                             view.requestFocus();
-                            InputMethodManager imm = (InputMethodManager) itemView
-                                    .getContext()
-                                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                            ServiceUtils.showKeyboard(view);
                         },
                                 200);
                     }
