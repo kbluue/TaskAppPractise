@@ -13,6 +13,8 @@ import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.CustomList;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
+import java.util.Collections;
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
 
     public static CustomList<Task> tasks;
@@ -33,6 +35,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    private void refresh(){
+        Collections.sort(tasks);
+        notifyDataSetChanged();
     }
 
     public static void saveTask() {
@@ -56,12 +63,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
                     .bind(R.id.task_delete, R.drawable.ic_delete_color)
                     .addOnClickListener(R.id.task_state, v -> {
                         task.toggleDone();
-                        notifyDataSetChanged();
+                        refresh();
                     })
                     .addOnClickListener(R.id.task_delete, v -> {
                         task.delete();
                         tasks.remove(task);
-                        notifyDataSetChanged();
+                        refresh();
                     });
             itemView.setClickable(true);
             addOnClickListener(task);

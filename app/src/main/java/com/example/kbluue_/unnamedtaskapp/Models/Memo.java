@@ -43,12 +43,19 @@ public class Memo extends StorableObject implements Comparable {
         setChanged();
     }
 
+    /**
+     * @param o
+     * @return -1, 0 or 1 if this Memo is considered greater than the Memo in param o
+     *
+     * Memos with null ids are considered the smaller Memos but if both have non-null ids, they will
+     * be sorted based on their lastUpdated property. The most recently updated is considered smaller.
+     */
     @Override
     public int compareTo(Object o) {
         if (o instanceof Memo) {
             Memo anotherMemo = (Memo) o;
-            Timestamp anotherMemoTS = anotherMemo.getTimeCreated(),
-                    thisTS = getTimeCreated();
+            Timestamp anotherMemoTS = anotherMemo.getLastUpdated(),
+                    thisTS = getLastUpdated();
             if (anotherMemoTS == null ^ thisTS == null){
                 if (thisTS == null){
                     return -1;
