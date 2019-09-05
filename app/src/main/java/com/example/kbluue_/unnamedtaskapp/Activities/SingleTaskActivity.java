@@ -26,18 +26,19 @@ import java.util.List;
 
 public class SingleTaskActivity extends BaseActivity implements HasInitialState, HasMenu, HasRecyclerView {
 
+    private static final String INITIAL_TASK_STATE = "initial task state";
     public static int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
 
     @Override
     protected void onPause() {
-        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        TaskListActivity.getTasks().get(taskIndex).notifyAction();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        TaskAdapter.tasks.get(taskIndex).notifyAction();
+        TaskListActivity.getTasks().get(taskIndex).notifyAction();
         super.onDestroy();
     }
 
@@ -47,7 +48,7 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
         getMenu().findItem(R.id.sv_prev_menu)
                 .setVisible(taskIndex != 0);
         getMenu().findItem(R.id.sv_next_menu)
-                .setVisible(taskIndex != TaskAdapter.tasks.size() - 1);
+                .setVisible(taskIndex != TaskListActivity.getTasks().size() - 1);
         return true;
     }
 
@@ -67,11 +68,11 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
                 view.requestFocus();
                 ServiceUtils.showKeyboard(view);
             }, 200);
-        } else if (taskIndex >= TaskAdapter.tasks.size()){
-            taskIndex = TaskAdapter.tasks.size() - 1;
+        } else if (taskIndex >= TaskListActivity.getTasks().size()){
+            taskIndex = TaskListActivity.getTasks().size() - 1;
         }
 
-        Task task = TaskAdapter.tasks.get(taskIndex);
+        Task task = TaskListActivity.getTasks().get(taskIndex);
 
         ViewConfig.getInstance(this)
                 .bind(R.id.sv_task_name, task.getName())
@@ -89,7 +90,7 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, --taskIndex))
                 .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
                 .addMember(R.id.sv_delete_menu, (Runnable) () -> {
-                    TaskAdapter.tasks.get(taskIndex).delete();
+                    TaskListActivity.getTasks().get(taskIndex).delete();
                     TaskAdapter.tasks.remove(taskIndex);
                     start(this, taskIndex);
                 })
@@ -119,6 +120,6 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
 
     @Override
     public void saveInitialState() {
-        ProcessStore.addObject("initial task state", TaskAdapter.tasks.get(taskIndex));
+        ProcessStore.putObject(INITIAL_TASK_STATE, TaskListActivity.getTasks().get(taskIndex));
     }
 }

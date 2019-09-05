@@ -6,7 +6,7 @@ public class ProcessStore {
 
     private static HashMap<String, Object> objects = new HashMap<>();
 
-    public static void addObject(String key, Object object){
+    public static void putObject(String key, Object object){
         objects.put(key, object);
     }
 

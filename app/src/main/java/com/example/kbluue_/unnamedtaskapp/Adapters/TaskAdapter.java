@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
 
-    public static CustomList<Task> tasks;
+//    public static CustomList<Task> tasks;
 
     @NonNull
     @Override
@@ -29,12 +29,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
 
     @Override
     public void onBindViewHolder(@NonNull TaskVH holder, int position) {
-        holder.bind(tasks.get(position));
+        holder.bind(TaskListActivity.getTasks().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return TaskListActivity.getTasks().size();
     }
 
     private void refresh(){
@@ -75,7 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
         }
 
         private void addOnClickListener(Task task){
-            itemView.setOnClickListener(v -> SingleTaskActivity.start(v.getContext(), tasks.indexOf(task)));
+            itemView.setOnClickListener(v -> SingleTaskActivity.start(v.getContext(), TaskListActivity.getTasks().indexOf(task)));
         }
     }
 }

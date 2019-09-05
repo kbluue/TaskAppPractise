@@ -18,7 +18,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import static com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore.getObject;
+import static com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore.putObject;
+
 public class TaskListActivity extends BaseActivity implements HasButtons, HasMenu, HasRecyclerView {
+
+    private static final String TASKS = "tasks";
 
     @Override
     protected void onPause() {
@@ -39,7 +44,7 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
 
     @Override
     protected void init() {
-        TaskAdapter.tasks = loadTasks();
+        putObject(TASKS, loadTasks());
     }
 
     @Override
@@ -87,5 +92,9 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
     @Override
     public List<ClickableAction> setMenuActions() {
         return null;
+    }
+
+    public static CustomList<Task> getTasks() {
+        return getObject(TASKS, CustomList.class);
     }
 }

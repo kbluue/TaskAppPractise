@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
+import com.example.kbluue_.unnamedtaskapp.Activities.TaskListActivity;
 import com.example.kbluue_.unnamedtaskapp.Models.SubTask;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
@@ -51,7 +52,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     }
 
     private Task getTask(){
-        return TaskAdapter.tasks.get(SingleTaskActivity.taskIndex);
+        return TaskListActivity.getTasks().get(SingleTaskActivity.taskIndex);
     }
 
     public void updateSubtaskList(){
