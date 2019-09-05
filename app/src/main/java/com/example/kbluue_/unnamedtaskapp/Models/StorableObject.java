@@ -9,6 +9,11 @@ import com.google.gson.Gson;
 
 import java.util.Locale;
 
+import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.EMPTY_STRING;
+import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.ID_FORMAT;
+import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.NAME_FORMAT;
+import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.UID;
+
 public class StorableObject implements IsObservable {
 
     private String id, name;
@@ -21,8 +26,8 @@ public class StorableObject implements IsObservable {
 
     public StorableObject(Context context, String name) {
         this.context = context;
-        setId(String.format(Locale.ENGLISH, "%s%04d", name.charAt(0), getUID(context)));
-        this.name = String.format(Locale.ENGLISH, "%s #%s", name, getId());
+        setId(String.format(Locale.ENGLISH, ID_FORMAT, name.charAt(0), getUID(context)));
+        this.name = String.format(Locale.ENGLISH, NAME_FORMAT, name, getId());
     }
 
     public String getId() {
@@ -80,10 +85,10 @@ public class StorableObject implements IsObservable {
     }
 
     private static int getUID(Context context){
-        int lastUID = getPref(context).getInt("UID", 0);
+        int lastUID = getPref(context).getInt(UID, 0);
         int UID = ++lastUID;
         getPref(context).edit()
-                .putInt("UID", UID)
+                .putInt(StringConstants.UID, UID)
                 .apply();
         return UID;
     }
@@ -106,7 +111,7 @@ public class StorableObject implements IsObservable {
 
     public static <T extends StorableObject> StorableObject getInstance(Context context, String id,Class<T> aClass) {
         String JsonValue =  StorableObject.getPref(context)
-                .getString(id, "");
+                .getString(id, EMPTY_STRING);
         StorableObject storableObject =  GSON.fromJson(JsonValue, aClass);
         storableObject.setContext(context);
         return storableObject;

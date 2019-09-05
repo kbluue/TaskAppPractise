@@ -15,7 +15,7 @@ public class Task extends Memo implements HasChildren {
     public Task(){}
 
     public Task(Context context){
-        super(context, "Task");
+        super(context, StringConstants.TASK);
         addChild(new SubTask());
     }
 
@@ -118,7 +118,7 @@ public class Task extends Memo implements HasChildren {
 
     public String getCompletedCount(){
         if (getChildren() == null){
-            return "";
+            return StringConstants.EMPTY_STRING;
         } else {
             int completed = 0;
             for (SubTask task : getChildren()){
@@ -126,13 +126,13 @@ public class Task extends Memo implements HasChildren {
                     completed++;
                 }
             }
-            return completed + "/" + (getChildren().length - 1);
+            return completed + StringConstants.FORWARD_SLASH + (getChildren().length - 1);
         }
     }
 
     private void updateTaskIds(boolean add){
         Set<String> taskIds = StorableObject.getPref(context)
-                .getStringSet("taskIds", new HashSet<>());
+                .getStringSet(StringConstants.TASK_IDS, new HashSet<>());
         if (add) {
             taskIds.add(getId());
         } else {
@@ -140,7 +140,7 @@ public class Task extends Memo implements HasChildren {
         }
         StorableObject.getPref(context)
                 .edit()
-                .putStringSet("taskIds", taskIds)
+                .putStringSet(StringConstants.TASK_IDS, taskIds)
                 .apply();
     }
 }

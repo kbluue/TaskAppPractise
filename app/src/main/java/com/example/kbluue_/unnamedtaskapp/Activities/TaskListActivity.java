@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.StorableObject;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
@@ -17,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class TaskListActivity extends BaseActivity implements HasButtons, HasRecyclerView {
+public class TaskListActivity extends BaseActivity implements HasButtons, HasMenu, HasRecyclerView {
 
     @Override
     protected void onPause() {
@@ -76,5 +77,15 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasRec
             Collections.sort(tasks);
         }
         return tasks;
+    }
+
+    @Override
+    public int setMenuId() {
+        return R.menu.for_task_list;
+    }
+
+    @Override
+    public List<ClickableAction> setMenuActions() {
+        return null;
     }
 }

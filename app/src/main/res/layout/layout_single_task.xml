@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/default_margin"
         android:textSize="@dimen/default_text_size"
         android:selectAllOnFocus="true"
-        android:background="@color/white"
+        android:background="@color/transparent"
         android:id="@+id/sv_task_name"/>
 
     <androidx.recyclerview.widget.RecyclerView

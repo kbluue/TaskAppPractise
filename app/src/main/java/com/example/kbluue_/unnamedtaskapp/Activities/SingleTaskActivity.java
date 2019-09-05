@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,8 +61,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
             Collections.sort(TaskAdapter.tasks);
             taskIndex = 0;
             EditText view = findViewById(R.id.sv_task_name);
-            view.postDelayed(view::requestFocus, 200);
-            ServiceUtils.showKeyboard(view);
+            view.postDelayed(() -> {
+                view.requestFocus();
+                ServiceUtils.showKeyboard(view);
+            }, 200);
         } else if (taskIndex >= TaskAdapter.tasks.size()){
             taskIndex = TaskAdapter.tasks.size() - 1;
         }
@@ -89,10 +90,6 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
                     TaskAdapter.tasks.get(taskIndex).delete();
                     TaskAdapter.tasks.remove(taskIndex);
                     start(this, taskIndex);
-                })
-                .addMember(R.id.sv_edit_menu, (Runnable) () -> {
-                    TextView view = findViewById(R.id.sv_task_name);
-                    view.requestFocus();
                 })
                 .deliver();
     }
