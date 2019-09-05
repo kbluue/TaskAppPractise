@@ -11,18 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Adapters.SubTaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasInitialState;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
+import com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore;
 import com.example.kbluue_.unnamedtaskapp.Utils.ServiceUtils;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Collections;
 import java.util.List;
 
-public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecyclerView {
+public class SingleTaskActivity extends BaseActivity implements HasInitialState, HasMenu, HasRecyclerView {
 
     public static int taskIndex;
     final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -113,5 +115,10 @@ public class SingleTaskActivity extends BaseActivity implements HasMenu, HasRecy
         Intent starter = new Intent(context, SingleTaskActivity.class);
         taskIndex = taskPosition;
         context.startActivity(starter);
+    }
+
+    @Override
+    public void saveInitialState() {
+        ProcessStore.addObject("initial task state", TaskAdapter.tasks.get(taskIndex));
     }
 }

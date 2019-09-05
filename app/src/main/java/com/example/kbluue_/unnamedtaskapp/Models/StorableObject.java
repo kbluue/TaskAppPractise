@@ -3,7 +3,7 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.kbluue_.unnamedtaskapp.Interfaces.IsObservable;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.Observable;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.google.gson.Gson;
 
@@ -14,7 +14,7 @@ import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.ID_FORMA
 import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.NAME_FORMAT;
 import static com.example.kbluue_.unnamedtaskapp.Models.StringConstants.UID;
 
-public class StorableObject implements IsObservable {
+public class StorableObject implements Observable {
 
     private String id, name;
     private boolean changed;
