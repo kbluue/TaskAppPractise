@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
+import com.example.kbluue_.unnamedtaskapp.Interfaces.HasInitialState;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 
@@ -63,6 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (!isAdmin) {
                 hasButtons.hideAdminButtons();
             }
+        }
+
+        if (this instanceof HasInitialState) {
+            HasInitialState hasInitialState = (HasInitialState) this;
+            hasInitialState.saveInitialState();
         }
 
         if (this instanceof HasRecyclerView) {

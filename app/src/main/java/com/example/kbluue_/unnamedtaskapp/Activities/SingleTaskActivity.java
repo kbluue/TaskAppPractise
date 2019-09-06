@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Adapters.SubTaskAdapter;
-import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasInitialState;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
@@ -17,12 +16,13 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
-import com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore;
 import com.example.kbluue_.unnamedtaskapp.Utils.ServiceUtils;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore.putObject;
 
 public class SingleTaskActivity extends BaseActivity implements HasInitialState, HasMenu, HasRecyclerView {
 
@@ -45,10 +45,12 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+
         getMenu().findItem(R.id.sv_prev_menu)
                 .setVisible(taskIndex != 0);
         getMenu().findItem(R.id.sv_next_menu)
                 .setVisible(taskIndex != TaskListActivity.getTasks().size() - 1);
+
         return true;
     }
 
@@ -60,8 +62,8 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
     @Override
     protected void init() {
         if (taskIndex < 0) {
-            TaskAdapter.tasks.add(new Task(this));
-            Collections.sort(TaskAdapter.tasks);
+            TaskListActivity.getTasks().add(new Task(this));
+            Collections.sort(TaskListActivity.getTasks());
             taskIndex = 0;
             EditText view = findViewById(R.id.sv_task_name);
             view.postDelayed(() -> {
@@ -91,8 +93,12 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
                 .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
                 .addMember(R.id.sv_delete_menu, (Runnable) () -> {
                     TaskListActivity.getTasks().get(taskIndex).delete();
-                    TaskAdapter.tasks.remove(taskIndex);
+                    TaskListActivity.getTasks().remove(taskIndex);
                     start(this, taskIndex);
+                })
+                .addMember(R.id.sv_cancel_changes, (Runnable) () -> {
+                    TaskListActivity.getTasks().get(taskIndex).clearChanged();
+                    finish();
                 })
                 .deliver();
     }
@@ -120,6 +126,6 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
 
     @Override
     public void saveInitialState() {
-        ProcessStore.putObject(INITIAL_TASK_STATE, TaskListActivity.getTasks().get(taskIndex));
+        putObject(INITIAL_TASK_STATE, TaskListActivity.getTasks().get(taskIndex));
     }
 }

@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
+import com.example.kbluue_.unnamedtaskapp.Activities.TaskListActivity;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
-import com.example.kbluue_.unnamedtaskapp.Utils.CustomList;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
 import java.util.Collections;
@@ -38,12 +38,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
     }
 
     private void refresh(){
-        Collections.sort(tasks);
+        Collections.sort(TaskListActivity.getTasks());
         notifyDataSetChanged();
     }
 
     public static void saveTask() {
-        for (Task task : tasks){
+        for (Task task : TaskListActivity.getTasks()){
             task.notifyAction();
         }
     }
@@ -67,7 +67,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
                     })
                     .addOnClickListener(R.id.task_delete, v -> {
                         task.delete();
-                        tasks.remove(task);
+                        TaskListActivity.getTasks().remove(task);
                         refresh();
                     });
             itemView.setClickable(true);

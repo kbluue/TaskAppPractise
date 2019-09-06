@@ -9,6 +9,12 @@
         app:showAsAction="always"/>
 
     <item
+        android:title="@string/cancel_changes"
+        android:icon="@drawable/ic_return_white"
+        android:id="@+id/sv_cancel_changes"
+        app:showAsAction="always"/>
+
+    <item
         android:title="@string/delete"
         android:icon="@drawable/ic_delete"
         android:id="@+id/sv_delete_menu"
