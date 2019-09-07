@@ -54,8 +54,8 @@ public class Memo extends StorableObject implements Comparable {
     public int compareTo(Object o) {
         if (o instanceof Memo) {
             Memo anotherMemo = (Memo) o;
-            Timestamp anotherMemoTS = anotherMemo.getLastUpdated(),
-                    thisTS = getLastUpdated();
+            Timestamp anotherMemoTS = anotherMemo.getTimeCreated(),
+                    thisTS = getTimeCreated();
             if (anotherMemoTS == null ^ thisTS == null){
                 if (thisTS == null){
                     return -1;
