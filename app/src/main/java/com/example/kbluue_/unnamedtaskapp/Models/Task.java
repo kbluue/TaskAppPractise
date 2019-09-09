@@ -2,6 +2,8 @@ package com.example.kbluue_.unnamedtaskapp.Models;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasChildren;
 
 import java.util.HashSet;
@@ -49,11 +51,16 @@ public class Task extends Memo implements HasChildren {
     }
 
     @Override
-    public void addChild(Memo child) {
+    public void addChild(@NonNull Memo child) {
+        if (child.getLastUpdated() != null) {
+            setLastUpdated(child.getLastUpdated());
+        }
+
         int len = 0;
         if (children != null) {
             len = children.length;
         }
+
         SubTask[] subTasks = new SubTask[len + 1];
         for (int i = 0; i < len; i++) {
             if (child.equals(getChild(i))){
