@@ -1,5 +1,6 @@
 package com.example.kbluue_.unnamedtaskapp.Utils;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -36,12 +37,7 @@ public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
         actions.add(action);
     }
 
-    public void addAction(int direction, Runnable action){
-        ClickableAction clickableAction = new ClickableAction(direction, action, false);
-        actions.add(clickableAction);
-    }
-
-    public void remooveAction(int direction){
+    public void removeAction(int direction){
         actions.remove(direction);
     }
 
@@ -59,5 +55,10 @@ public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
             action = ClickableAction.findActionById(actions, direction);
         }
         action.run();
+    }
+
+    @Override
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
     }
 }
