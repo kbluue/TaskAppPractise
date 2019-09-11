@@ -1,5 +1,8 @@
 package com.example.kbluue_.unnamedtaskapp.Interfaces;
 
+import android.util.Log;
+import android.view.View;
+
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -7,9 +10,11 @@ import java.util.List;
 
 public class ClickableAction {
 
-    private int viewId;
-    private Runnable action;
-    private boolean isAdmin;
+    private final int viewId;
+    private final Runnable action;
+    private final boolean isAdmin;
+
+    private static final String TAG = "ClickableAction";
 
     public ClickableAction(int viewId, Runnable action, boolean isAdmin) {
         this.viewId = viewId;
@@ -19,6 +24,8 @@ public class ClickableAction {
 
     public ClickableAction(int id){
         this.viewId = id;
+        this.action = null;
+        this.isAdmin = false;
     }
 
     public int getViewId() {
@@ -31,6 +38,21 @@ public class ClickableAction {
 
     public boolean isAdmin() {
         return isAdmin;
+    }
+
+    public static Runnable findActionByView(List<ClickableAction> list, View view) {
+        return findActionById(list, view.getId());
+    }
+
+    public static Runnable findActionById(List<ClickableAction> list, int id) {
+        ClickableAction action = new ClickableAction(id);
+        if (list.contains(action)) {
+            int index = list.indexOf(action);
+            action = list.get(index);
+            return action.getAction();
+        } else {
+            return () -> Log.d(TAG, "findActionById: View (or Id) not registered");
+        }
     }
 
     @Override

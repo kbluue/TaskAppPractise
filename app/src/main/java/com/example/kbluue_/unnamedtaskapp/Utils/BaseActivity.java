@@ -18,6 +18,9 @@ import com.example.kbluue_.unnamedtaskapp.Interfaces.HasRecyclerView;
 
 import java.util.List;
 
+import static com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction.findActionById;
+import static com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction.findActionByView;
+
 /**
  * Created by _kbluue_ on 8/2/2019.
  */
@@ -109,7 +112,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         } else {
-            Runnable action = findMenuActionById(item.getItemId());
+            Runnable action = findMenuAction(item);
             if (action == null) {
                 Log.d(TAG, "onOptionsItemSelected: Menu action not defined");
                 return false;
@@ -132,7 +135,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void onButtonPressed(View view) {
-        Runnable runnable = findButtonActionById(view.getId());
+        Runnable runnable = findButtonAction(view);
         if (runnable == null) {
             Log.d(TAG, "onButtonPressed: Button action not defined");
         } else {
@@ -140,27 +143,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private Runnable findActionById(List<ClickableAction> list, int id) {
-        ClickableAction action = new ClickableAction(id);
-        if (list.contains(action)) {
-            int index = list.indexOf(action);
-            action = list.get(index);
-            return action.getAction();
-        } else {
-            return () -> Log.d(TAG, "findActionById: View not registered");
-        }
-    }
-
-    public Runnable findMenuActionById(int id) {
+    public Runnable findMenuAction(MenuItem menuItem) {
         if (menuActions == null) {
             return () -> Log.d(TAG, "findMenuActionById: MenuActions not registered");
         } else {
-            return findActionById(menuActions, id);
+            return findActionById(menuActions, menuItem.getItemId());
         }
     }
 
-    public Runnable findButtonActionById(int id) {
-        return findActionById(buttonActions, id);
+    public Runnable findButtonAction(View view) {
+        return findActionByView(buttonActions, view);
     }
 
     protected abstract int getLayoutId();
