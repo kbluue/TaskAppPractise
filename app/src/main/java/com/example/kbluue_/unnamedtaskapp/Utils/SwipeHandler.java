@@ -14,7 +14,7 @@ public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
 
     private static final String TAG = "SwipeHandler";
 
-    private RecyclerView.Adapter adapter;
+    private final RecyclerView.Adapter adapter;
     private List<ClickableAction> actions;
 
     public SwipeHandler(RecyclerView.Adapter adapter) {
@@ -26,6 +26,23 @@ public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
         super(0, 0);
         this.adapter = adapter;
         this.actions = actions;
+    }
+
+    public RecyclerView.Adapter getAdapter() {
+        return adapter;
+    }
+
+    public void addAction(ClickableAction action){
+        actions.add(action);
+    }
+
+    public void addAction(int direction, Runnable action){
+        ClickableAction clickableAction = new ClickableAction(direction, action, false);
+        actions.add(clickableAction);
+    }
+
+    public void remooveAction(int direction){
+        actions.remove(direction);
     }
 
     @Override
