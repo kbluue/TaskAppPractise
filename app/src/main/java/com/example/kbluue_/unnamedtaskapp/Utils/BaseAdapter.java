@@ -100,15 +100,14 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         Collections.sort(dataSet);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
+    public void finish() {
+
+        System.out.println("FINALIZE CALLED");
 
         Object dataSample = getDataSample();
 
         if (dataSample instanceof StorableObject)
             updateDataSetInPersistentStorage();
-
-        super.finalize();
     }
 
     private Object getDataSample() {

@@ -24,16 +24,16 @@ import static com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore.putObject;
 public class TaskListActivity extends BaseActivity implements HasButtons, HasMenu, HasRecyclerView {
 
     private static final String TASKS = "tasks";
+    private TaskAdapter taskAdapter;
 
     @Override
     protected void onPause() {
-//        TaskAdapter.saveTask();
+        getAdapter().finish();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-//        TaskAdapter.saveTask();
         super.onDestroy();
     }
 
@@ -75,8 +75,11 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
     }
 
     @Override
-    public RecyclerView.Adapter getAdapter() {
-        return new TaskAdapter(getTasks());
+    public TaskAdapter getAdapter() {
+        if (taskAdapter == null) {
+            taskAdapter = new TaskAdapter(getTasks());
+        }
+        return taskAdapter;
     }
 
     @Override

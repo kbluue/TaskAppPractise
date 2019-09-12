@@ -56,7 +56,7 @@ public class TaskAdapter extends BaseAdapter {
     }
 
     private void bindOnClickListenersToChildView(ViewConfig config, Task task) {
-        config.addOnClickListener(R.id.task_state, doneButton -> toggleTaskStateAndRefresh(task))
+        config.addOnClickListener(R.id.task_state, stateButton -> toggleTaskStateAndRefresh(task))
                 .addOnClickListener(R.id.task_delete, deleteButton -> deleteTaskAndRefresh(task));
     }
 
