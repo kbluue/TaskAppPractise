@@ -12,7 +12,25 @@ import java.util.List;
 
 public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseVH>{
 
-    List dataSet;
+    private List dataSet;
+    private boolean isChildClickable;
+    private View.OnClickListener childOnClickListener;
+
+    public void setChildClickable(boolean childClickable) {
+        isChildClickable = childClickable;
+    }
+
+    public void setChildOnClickListener(View.OnClickListener childOnClickListener) {
+        this.childOnClickListener = childOnClickListener;
+    }
+
+    public void insertIntoDataSet(Object newData){
+        dataSet.add(newData);
+    }
+
+    public void removeFromDataSet(Object dataToBeRemoved){
+        dataSet.remove(dataToBeRemoved);
+    }
 
     public BaseAdapter(@NonNull List dataSet) {
         this.dataSet = dataSet;
@@ -26,11 +44,42 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         return new BaseVH(view);
     }
 
-    abstract int getChildViewRes();
+    public abstract int getChildViewRes();
+
+    public class BaseVH extends RecyclerView.ViewHolder {
+
+        public BaseVH(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        public void processChildView(int position){
+            tagChild(position);
+            initChildView(position);
+            setChildOnClickListener();
+        }
+
+        private void tagChild(int position) {
+            itemView.setTag(position);
+        }
+
+        private void initChildView(int position){
+            ViewConfig config = ViewConfig.getInstance(itemView);
+            Object childData = dataSet.get(position);
+            bindChild(config, childData);
+        }
+
+        private void setChildOnClickListener() {
+            if (isChildClickable && childOnClickListener != null)
+                itemView.setOnClickListener(childOnClickListener);
+        }
+
+    }
+
+    public abstract void bindChild(ViewConfig config, Object childData);
 
     @Override
     public final void onBindViewHolder(@NonNull BaseVH holder, int position) {
-        holder.bind(position);
+        holder.processChildView(position);
     }
 
     @Override
@@ -54,18 +103,4 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
     }
 
     protected abstract void onFinalize();
-
-    public class BaseVH extends RecyclerView.ViewHolder {
-
-        public BaseVH(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        public void bind(int position){
-            ViewConfig config = ViewConfig.getInstance(itemView);
-            bindChild(config, position);
-        }
-    }
-
-    abstract void bindChild(ViewConfig config, int position);
 }
