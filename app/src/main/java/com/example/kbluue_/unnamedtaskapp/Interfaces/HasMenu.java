@@ -14,7 +14,7 @@ public interface HasMenu {
         List<ClickableAction> actions = setMenuActions();
         for (ClickableAction action : actions){
             if (action.isAdmin()){
-                menu.findItem(action.getViewId())
+                menu.findItem(action.getActionId())
                         .setVisible(false);
             }
         }

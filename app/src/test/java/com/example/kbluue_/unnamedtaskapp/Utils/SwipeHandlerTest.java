@@ -1,18 +1,18 @@
 package com.example.kbluue_.unnamedtaskapp.Utils;
 
-import androidx.recyclerview.widget.ItemTouchHelper;
+import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class SwipeHandlerTest {
 
     @Test
     public void setDefaultSwipe(){
-        SwipeHandler handler = new SwipeHandler();
 
-        handler.setDefaultSwipeDirs(ItemTouchHelper.UP);
+        SwipeHandler.getInstance(new TaskAdapter())
+                .setLeftSwipeAction(null)
+                .setLeftSwipeAction(null)
+                .setRightSwipeAction(null);
     }
 
 }

@@ -21,7 +21,7 @@ public interface HasButtons {
         for (ClickableAction action : actions){
             if (action.isAdmin()){
                 ((BaseActivity) this)
-                        .findViewById(action.getViewId())
+                        .findViewById(action.getActionId())
                         .setVisibility(View.GONE);
             }
         }

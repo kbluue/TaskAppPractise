@@ -10,26 +10,26 @@ import java.util.List;
 
 public class ClickableAction {
 
-    private final int viewId;
+    private final int actionId;
     private final Runnable action;
     private final boolean isAdmin;
 
     private static final String TAG = "ClickableAction";
 
-    public ClickableAction(int viewId, Runnable action, boolean isAdmin) {
-        this.viewId = viewId;
+    public ClickableAction(int actionId, Runnable action, boolean isAdmin) {
+        this.actionId = actionId;
         this.action = action;
         this.isAdmin = isAdmin;
     }
 
     public ClickableAction(int id){
-        this.viewId = id;
+        this.actionId = id;
         this.action = null;
         this.isAdmin = false;
     }
 
-    public int getViewId() {
-        return viewId;
+    public int getActionId() {
+        return actionId;
     }
 
     public Runnable getAction() {
@@ -58,7 +58,7 @@ public class ClickableAction {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj instanceof ClickableAction){
-            return ((ClickableAction)obj).getViewId() == this.getViewId();
+            return ((ClickableAction)obj).getActionId() == this.getActionId();
         }
         return super.equals(obj);
     }

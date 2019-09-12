@@ -2,43 +2,35 @@ package com.example.kbluue_.unnamedtaskapp.Utils;
 
 import android.graphics.Canvas;
 import android.util.Log;
+import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
-
-import java.util.List;
-
 public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
 
     private static final String TAG = "SwipeHandler";
+    private static final int swipeDirs = ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT;
 
     private final RecyclerView.Adapter adapter;
-    private List<ClickableAction> actions;
+    private final SparseArray<Runnable> actions;
 
     public SwipeHandler(RecyclerView.Adapter adapter) {
-        super(0, 0);
+        super(0, swipeDirs);
         this.adapter = adapter;
+        final int maxCapacity = 2;
+        actions = new SparseArray<>(maxCapacity);
     }
 
-    public SwipeHandler(RecyclerView.Adapter adapter, List<ClickableAction> actions) {
-        super(0, 0);
-        this.adapter = adapter;
-        this.actions = actions;
+    public SwipeHandler setRightSwipeAction(Runnable action){
+        actions.put(ItemTouchHelper.RIGHT, action);
+        return this;
     }
 
-    public RecyclerView.Adapter getAdapter() {
-        return adapter;
-    }
-
-    public void addAction(ClickableAction action){
-        actions.add(action);
-    }
-
-    public void removeAction(int direction){
-        actions.remove(direction);
+    public SwipeHandler setLeftSwipeAction(Runnable action){
+        actions.put(ItemTouchHelper.LEFT, action);
+        return this;
     }
 
     @Override
@@ -52,7 +44,7 @@ public class SwipeHandler extends ItemTouchHelper.SimpleCallback {
         if (actions == null) {
             action = () -> Log.d(TAG, "onSwiped: Swipe actions not registered");
         } else {
-            action = ClickableAction.findActionById(actions, direction);
+            action = actions.get(direction);
         }
         action.run();
     }
