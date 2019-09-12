@@ -3,7 +3,7 @@ package com.example.kbluue_.unnamedtaskapp.Activities;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kbluue_.unnamedtaskapp.Adapters.TaskAdapter;
+import com.example.kbluue_.unnamedtaskapp.BaseAdapters.TaskAdapter;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.ClickableAction;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasButtons;
 import com.example.kbluue_.unnamedtaskapp.Interfaces.HasMenu;
@@ -27,13 +27,13 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
 
     @Override
     protected void onPause() {
-        TaskAdapter.saveTask();
+//        TaskAdapter.saveTask();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        TaskAdapter.saveTask();
+//        TaskAdapter.saveTask();
         super.onDestroy();
     }
 
@@ -45,6 +45,20 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
     @Override
     protected void init() {
         putObject(TASKS, loadTasks());
+    }
+
+    private CustomList<Task> loadTasks(){
+        Set<String> taskIds = StorableObject.getPref(this)
+                .getStringSet("taskIds", null);
+        CustomList<Task> tasks = new CustomList<>();
+        if (taskIds != null) {
+            for (String id : taskIds){
+                Task task = Task.getInstance(this, id);
+                tasks.add(task);
+            }
+            Collections.sort(tasks);
+        }
+        return tasks;
     }
 
     @Override
@@ -62,26 +76,12 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
 
     @Override
     public RecyclerView.Adapter getAdapter() {
-        return new TaskAdapter();
+        return new TaskAdapter(getTasks());
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return new LinearLayoutManager(this);
-    }
-
-    private CustomList<Task> loadTasks(){
-        Set<String> taskIds = StorableObject.getPref(this)
-                .getStringSet("taskIds", null);
-        CustomList<Task> tasks = new CustomList<>();
-        if (taskIds != null) {
-            for (String id : taskIds){
-                Task task = Task.getInstance(this, id);
-                tasks.add(task);
-            }
-            Collections.sort(tasks);
-        }
-        return tasks;
     }
 
     @Override

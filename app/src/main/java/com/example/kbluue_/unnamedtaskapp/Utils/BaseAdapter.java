@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kbluue_.unnamedtaskapp.Models.StorableObject;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -16,8 +18,8 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
     private boolean isChildClickable;
     private View.OnClickListener childOnClickListener;
 
-    public void setChildClickable(boolean childClickable) {
-        isChildClickable = childClickable;
+    protected void setChildClickable() {// TODO: <9/12/2019 3:35 PM> is it necessary?
+        isChildClickable = true;
     }
 
     public void setChildOnClickListener(View.OnClickListener childOnClickListener) {
@@ -26,10 +28,12 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
 
     public void insertIntoDataSet(Object newData){
         dataSet.add(newData);
+        notifyDataChanged();
     }
 
-    public void removeFromDataSet(Object dataToBeRemoved){
+    public void removeFromDataSet(com.example.kbluue_.unnamedtaskapp.Models.Task dataToBeRemoved){
         dataSet.remove(dataToBeRemoved);
+        notifyDataSetChanged();
     }
 
     public BaseAdapter(@NonNull List dataSet) {
@@ -46,13 +50,13 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
 
     public abstract int getChildViewRes();
 
-    public class BaseVH extends RecyclerView.ViewHolder {
+    class BaseVH extends RecyclerView.ViewHolder {
 
-        public BaseVH(@NonNull View itemView) {
+        BaseVH(@NonNull View itemView) {
             super(itemView);
         }
 
-        public void processChildView(int position){
+        void processChildView(int position){
             tagChild(position);
             initChildView(position);
             setChildOnClickListener();
@@ -65,7 +69,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         private void initChildView(int position){
             ViewConfig config = ViewConfig.getInstance(itemView);
             Object childData = dataSet.get(position);
-            bindChild(config, childData);
+            bindDataToChild(config, childData);
         }
 
         private void setChildOnClickListener() {
@@ -75,7 +79,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
 
     }
 
-    public abstract void bindChild(ViewConfig config, Object childData);
+    public abstract void bindDataToChild(ViewConfig config, Object childData);
 
     @Override
     public final void onBindViewHolder(@NonNull BaseVH holder, int position) {
@@ -87,7 +91,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         return dataSet.size();
     }
 
-    public void onDataSetChanged(){
+    protected void notifyDataChanged(){
         sortDataSet();
         notifyDataSetChanged();
     }
@@ -98,9 +102,31 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
 
     @Override
     protected void finalize() throws Throwable {
-        onFinalize();
+
+        Object dataSample = getDataSample();
+
+        if (dataSample instanceof StorableObject)
+            updateDataSetInPersistentStorage();
+
         super.finalize();
     }
 
-    protected abstract void onFinalize();
+    private Object getDataSample() {
+        Object dataSample;
+        if (!dataSet.isEmpty())
+            dataSample = dataSet.get(0);
+        else
+            dataSample = null;
+        return dataSample;
+    }
+
+    private void updateDataSetInPersistentStorage() {
+        for (Object storableObject : dataSet){
+            notifyForSaveAction((StorableObject) storableObject);
+        }
+    }
+
+    private void notifyForSaveAction(StorableObject storableObject) {
+        storableObject.notifyAction();
+    }
 }
