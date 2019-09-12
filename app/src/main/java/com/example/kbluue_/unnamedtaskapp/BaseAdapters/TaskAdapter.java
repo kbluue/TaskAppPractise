@@ -17,16 +17,7 @@ public class TaskAdapter extends BaseAdapter {
 
     public TaskAdapter(@NonNull List dataSet) {
         super(dataSet);
-        makeChildClickable();
-    }
-
-    private void makeChildClickable() {
-        setChildClickable();
-        setChildOnClickListener(getChildOnClickListener());
-    }
-
-    private View.OnClickListener getChildOnClickListener() {
-        return this::startSingleTaskActivity;
+        setChildOnClickListener(this::startSingleTaskActivity);
     }
 
     private void startSingleTaskActivity(View v) {

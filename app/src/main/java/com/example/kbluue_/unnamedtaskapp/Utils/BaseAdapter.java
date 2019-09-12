@@ -15,29 +15,24 @@ import java.util.List;
 public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseVH>{
 
     private List dataSet;
-    private boolean isChildClickable;
     private View.OnClickListener childOnClickListener;
 
-    protected void setChildClickable() {// TODO: <9/12/2019 3:35 PM> is it necessary?
-        isChildClickable = true;
+    public BaseAdapter(@NonNull List dataSet) {
+        this.dataSet = dataSet;
     }
 
-    public void setChildOnClickListener(View.OnClickListener childOnClickListener) {
+    protected void setChildOnClickListener(View.OnClickListener childOnClickListener) {
         this.childOnClickListener = childOnClickListener;
     }
 
-    public void insertIntoDataSet(Object newData){
+    protected void insertIntoDataSet(Object newData){
         dataSet.add(newData);
         notifyDataChanged();
     }
 
-    public void removeFromDataSet(com.example.kbluue_.unnamedtaskapp.Models.Task dataToBeRemoved){
+    protected void removeFromDataSet(com.example.kbluue_.unnamedtaskapp.Models.Task dataToBeRemoved){
         dataSet.remove(dataToBeRemoved);
         notifyDataSetChanged();
-    }
-
-    public BaseAdapter(@NonNull List dataSet) {
-        this.dataSet = dataSet;
     }
 
     @NonNull
@@ -73,13 +68,13 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         }
 
         private void setChildOnClickListener() {
-            if (isChildClickable && childOnClickListener != null)
+            if (childOnClickListener != null)
                 itemView.setOnClickListener(childOnClickListener);
         }
 
     }
 
-    public abstract void bindDataToChild(ViewConfig config, Object childData);
+    protected abstract void bindDataToChild(ViewConfig config, Object childData);
 
     @Override
     public final void onBindViewHolder(@NonNull BaseVH holder, int position) {
@@ -101,9 +96,6 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
     }
 
     public void finish() {
-
-        System.out.println("FINALIZE CALLED");
-
         Object dataSample = getDataSample();
 
         if (dataSample instanceof StorableObject)
