@@ -30,7 +30,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         notifyDataChanged();
     }
 
-    protected void removeFromDataSet(com.example.kbluue_.unnamedtaskapp.Models.Task dataToBeRemoved){
+    protected void removeFromDataSet(Object dataToBeRemoved){
         dataSet.remove(dataToBeRemoved);
         notifyDataSetChanged();
     }
