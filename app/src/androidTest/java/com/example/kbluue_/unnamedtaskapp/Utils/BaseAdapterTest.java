@@ -1,13 +1,29 @@
 package com.example.kbluue_.unnamedtaskapp.Utils;
 
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
+
+import com.example.kbluue_.unnamedtaskapp.Activities.SingleTaskActivity;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class BaseAdapterTest {
+
+    @Rule
+    ActivityTestRule<SingleTaskActivity> singleTaskActivityTestRule
+            = new ActivityTestRule<>(SingleTaskActivity.class);
 
     @Test
     public void setChildOnClickListener() {
+        Object testSample;
+        singleTaskActivityTestRule.
+
+        assertEquals(1, 1);
     }
 
     @Test
