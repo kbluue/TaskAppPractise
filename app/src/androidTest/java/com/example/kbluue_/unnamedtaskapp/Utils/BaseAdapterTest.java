@@ -15,14 +15,11 @@ import static org.junit.Assert.assertEquals;
 public class BaseAdapterTest {
 
     @Rule
-    ActivityTestRule<SingleTaskActivity> singleTaskActivityTestRule
+    public ActivityTestRule<SingleTaskActivity> singleTaskActivityTestRule
             = new ActivityTestRule<>(SingleTaskActivity.class);
 
     @Test
     public void setChildOnClickListener() {
-        Object testSample;
-        singleTaskActivityTestRule.
-
         assertEquals(1, 1);
     }
 

@@ -7,6 +7,13 @@ import android.widget.Toast;
 
 public class ServiceUtils {
 
+    public static void highlightEditView(EditText view){
+        view.postDelayed(() -> {
+            view.requestFocus();
+            ServiceUtils.showKeyboard(view);
+        }, 200);
+    }
+
     public static void showKeyboard(EditText view){
         InputMethodManager imm = (InputMethodManager) view
                 .getContext()

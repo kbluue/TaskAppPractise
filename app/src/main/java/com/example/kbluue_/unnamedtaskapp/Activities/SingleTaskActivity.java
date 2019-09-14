@@ -32,13 +32,13 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
 
     @Override
     protected void onPause() {
-        TaskListActivity.getTasks().get(taskIndex).notifyAction();
+        getTask().notifyAction();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        TaskListActivity.getTasks().get(taskIndex).notifyAction();
+        getTask().notifyAction();
         super.onDestroy();
     }
 
@@ -49,7 +49,7 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
         getMenu().findItem(R.id.sv_prev_menu)
                 .setVisible(taskIndex != 0);
         getMenu().findItem(R.id.sv_next_menu)
-                .setVisible(taskIndex != TaskListActivity.getTasks().size() - 1);
+                .setVisible(taskIndex != getLastIndexOfDataSet());
 
         return true;
     }
@@ -61,21 +61,43 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
 
     @Override
     protected void init() {
-        if (taskIndex < 0) {
-            TaskListActivity.getTasks().add(new Task(this));
-            Collections.sort(TaskListActivity.getTasks());
-            taskIndex = 0;
-            EditText view = findViewById(R.id.sv_task_name);
-            view.postDelayed(() -> {
-                view.requestFocus();
-                ServiceUtils.showKeyboard(view);
-            }, 200);
-        } else if (taskIndex >= TaskListActivity.getTasks().size()){
-            taskIndex = TaskListActivity.getTasks().size() - 1;
+        if (taskIndex < 0)
+            prepareNewTask();
+        else if (indexOverflows()) {
+            final int lastIndex = getLastIndexOfDataSet();
+            setTaskIndex(lastIndex);
         }
 
-        Task task = TaskListActivity.getTasks().get(taskIndex);
+        Task task = getTask();
 
+        bindTaskNameView(task);
+    }
+
+    private void prepareNewTask() {
+        TaskListActivity.getTasks().add(new Task(this));
+        Collections.sort(TaskListActivity.getTasks());
+        setTaskIndex(0);
+        EditText view = findViewById(R.id.sv_task_name);
+        ServiceUtils.highlightEditView(view);
+    }
+
+    private static void setTaskIndex(int i) {
+        taskIndex = i;
+    }
+
+    private boolean indexOverflows() {
+        return taskIndex >= TaskListActivity.getTasks().size();
+    }
+
+    private int getLastIndexOfDataSet() {
+        return TaskListActivity.getTasks().size() - 1;
+    }
+
+    private Task getTask() {
+        return TaskListActivity.getTasks().get(taskIndex);
+    }
+
+    private void bindTaskNameView(Task task) {
         ViewConfig.getInstance(this)
                 .bind(R.id.sv_task_name, task.getName())
                 .addTextListener(R.id.sv_task_name, (s, start, before, count) -> task.setName(s.toString()));
@@ -92,12 +114,12 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
                 .addMember(R.id.sv_prev_menu, (Runnable) () -> start(this, --taskIndex))
                 .addMember(R.id.sv_next_menu, (Runnable) () -> start(this, ++taskIndex))
                 .addMember(R.id.sv_delete_menu, (Runnable) () -> {
-                    TaskListActivity.getTasks().get(taskIndex).delete();
+                    getTask().delete();
                     TaskListActivity.getTasks().remove(taskIndex);
                     start(this, taskIndex);
                 })
                 .addMember(R.id.sv_cancel_changes, (Runnable) () -> {
-                    TaskListActivity.getTasks().get(taskIndex).clearChanged();
+                    getTask().clearChanged();
                     finish();
                 })
                 .deliver();
@@ -120,12 +142,12 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
 
     public static void start(Context context, int taskPosition) {
         Intent starter = new Intent(context, SingleTaskActivity.class);
-        taskIndex = taskPosition;
+        setTaskIndex(taskPosition);
         context.startActivity(starter);
     }
 
     @Override
     public void saveInitialState() {
-        putObject(INITIAL_TASK_STATE, TaskListActivity.getTasks().get(taskIndex));
+        putObject(INITIAL_TASK_STATE, getTask());
     }
 }

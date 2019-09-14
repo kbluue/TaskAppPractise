@@ -44,7 +44,11 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
 
     @Override
     protected void init() {
-        putObject(TASKS, loadTasks());
+        final CustomList<Task> preSavedTasks = loadTasks();
+        if (preSavedTasks == null)
+            putObject(TASKS, new CustomList<>());
+        else
+            putObject(TASKS, preSavedTasks);
     }
 
     private CustomList<Task> loadTasks(){
