@@ -11,6 +11,7 @@ public class ProcessStore {
     }
 
     public static <T> T getObject(String key, Class<T> tClass){
-        return tClass.cast(objects.get(key));
+        Object storedData = objects.get(key);
+        return tClass.cast(storedData);
     }
 }
