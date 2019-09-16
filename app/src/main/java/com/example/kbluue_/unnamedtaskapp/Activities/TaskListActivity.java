@@ -1,5 +1,7 @@
 package com.example.kbluue_.unnamedtaskapp.Activities;
 
+import android.content.Context;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +14,8 @@ import com.example.kbluue_.unnamedtaskapp.Models.StorableObject;
 import com.example.kbluue_.unnamedtaskapp.Models.Task;
 import com.example.kbluue_.unnamedtaskapp.R;
 import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
-import com.example.kbluue_.unnamedtaskapp.Utils.CustomList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +26,7 @@ import static com.example.kbluue_.unnamedtaskapp.Utils.ProcessStore.putObject;
 public class TaskListActivity extends BaseActivity implements HasButtons, HasMenu, HasRecyclerView {
 
     private static final String TASKS = "tasks";
+    private static Context context;
     private TaskAdapter taskAdapter;
 
     @Override
@@ -44,14 +47,15 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
 
     @Override
     protected void init() {
-        final CustomList<Task> preSavedTasks = loadTasks();
+        context = this.getApplicationContext();
+        final List<Task> preSavedTasks = loadTasks();
         putObject(TASKS, preSavedTasks);
     }
 
-    private CustomList<Task> loadTasks(){
+    private List<Task> loadTasks(){
         Set<String> taskIds = StorableObject.getPref(this)
                 .getStringSet("taskIds", null);
-        CustomList<Task> tasks = new CustomList<>();
+        List<Task> tasks = new ArrayList<>();
         if (taskIds != null) {
             for (String id : taskIds){
                 Task task = Task.getInstance(this, id);
@@ -98,7 +102,7 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
         return null;
     }
 
-    public static CustomList<Task> getTasks() {
-        return getObject(TASKS, CustomList.class);
+    public static List<Task> getTasks() {
+        return getObject(TASKS, ArrayList.class);
     }
 }

@@ -17,8 +17,6 @@ import java.util.Collections;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskVH>{
 
-//    public static CustomList<Task> tasks;
-
     @NonNull
     @Override
     public TaskVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -19,6 +19,7 @@ import com.example.kbluue_.unnamedtaskapp.Utils.BaseActivity;
 import com.example.kbluue_.unnamedtaskapp.Utils.ServiceUtils;
 import com.example.kbluue_.unnamedtaskapp.Utils.ViewConfig;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
     protected void init() {
         if (taskIndex < 0)
             prepareNewTask();
+        else if (isTest())
+            mockTasks();
         else if (indexOverflows()) {
             final int lastIndex = getLastIndexOfDataSet();
             setTaskIndex(lastIndex);
@@ -71,6 +74,17 @@ public class SingleTaskActivity extends BaseActivity implements HasInitialState,
         Task task = getTask();
 
         bindTaskNameView(task);
+    }
+
+    private boolean isTest() {
+        return TaskListActivity.getTasks() == null;
+    }
+
+    private void mockTasks() {
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task(this));
+        final String tasks1 = "tasks";
+        putObject(tasks1, tasks);
     }
 
     private void prepareNewTask() {

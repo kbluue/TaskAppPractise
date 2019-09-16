@@ -30,7 +30,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private int menuRes;
     private Menu menu;
     private boolean isAdmin = true;
-    private List<ClickableAction> menuActions, buttonActions;
+    private List<ClickableAction> menuActions;
+    private List<ClickableAction> buttonActions;
     private RecyclerView.Adapter baseAdapter;
 
     private static final String TAG = "BaseActivity";
@@ -121,17 +122,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
             }
         }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     public void onButtonPressed(View view) {
