@@ -87,6 +87,10 @@ public class TaskListActivity extends BaseActivity implements HasButtons, HasMen
         return taskAdapter;
     }
 
+    public void setTaskAdapter(TaskAdapter taskAdapter) {
+        this.taskAdapter = taskAdapter;
+    }
+
     @Override
     public RecyclerView.LayoutManager getLayoutManager() {
         return new LinearLayoutManager(this);

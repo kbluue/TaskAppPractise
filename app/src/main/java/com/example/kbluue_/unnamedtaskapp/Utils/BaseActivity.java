@@ -62,23 +62,34 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         init();
 
-        if (this instanceof HasButtons) {
-            HasButtons hasButtons = (HasButtons) this;
-            buttonActions = hasButtons.getButtonActions();
-            if (!isAdmin) {
-                hasButtons.hideAdminButtons();
-            }
-        }
+        if (this instanceof HasButtons)
+            initButtonActions();
 
-        if (this instanceof HasInitialState) {
-            HasInitialState hasInitialState = (HasInitialState) this;
-            hasInitialState.saveInitialState();
-        }
+        if (this instanceof HasInitialState)
+            initInitialState();
 
-        if (this instanceof HasRecyclerView) {
+        if (this instanceof HasRecyclerView)
+            initRecyclerView();
+    }
+
+    private void initButtonActions() {
+        HasButtons hasButtons = (HasButtons) this;
+        buttonActions = hasButtons.getButtonActions();
+        if (!isAdmin) {
+            hasButtons.hideAdminButtons();
+        }
+    }
+
+    private void initInitialState() {
+        HasInitialState hasInitialState = (HasInitialState) this;
+        hasInitialState.saveInitialState();
+    }
+
+    public void initRecyclerView() {
+        runOnUiThread(() -> {
             HasRecyclerView hasRecyclerView = (HasRecyclerView) this;
             hasRecyclerView.initRV(this);
-        }
+        });
     }
 
     @Override

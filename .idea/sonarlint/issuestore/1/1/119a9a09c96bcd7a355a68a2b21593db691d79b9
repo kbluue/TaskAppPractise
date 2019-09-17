@@ -1,0 +1,8 @@
+
+Bsquid:S1168f"+Return an empty collection instead of null.(¥¹ï
+Ysquid:S26962"6Make the enclosing method "static" or remove this set.(¢äıõùÿÿÿÿ8¶ÿ¯ÆÓ-
+?squid:S1185'"(Remove this method to simply inherit it.(ÍÙ÷¢
+Nsquid:S1068"+Remove this unused "context" private field.(ÄÖ¤–ıÿÿÿÿ8‡…¶ÆÓ-
+ysquid:S1450"VRemove the "context" field and declare it as a local variable in the relevant methods.(ÄÖ¤–ıÿÿÿÿ8‡…¶ÆÓ-
+rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Øä®‘
+esquid:MaximumInheritanceDepth"<This class has 9 parents which is greater than 5 authorized.(ÃŸ¼
